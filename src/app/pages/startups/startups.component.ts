@@ -54,6 +54,32 @@ export class StartupsComponent {
         type: 'number'
       }
     }
+    /*columns: {
+      companyname: {
+        title: 'Company Name',
+        type: 'string'
+      },
+      blurb: {
+        title: 'Blurb',
+        type: 'string'
+      },
+      contact: {
+        title: 'Contact',
+        type: 'string'
+      },
+      stage: {
+        title: 'Stage',
+        type: 'string'
+      },
+      email: {
+        title: 'E-mail',
+        type: 'string'
+      },
+      age: {
+        title: 'Age',
+        type: 'number'
+      }
+    }*/
   };
 
   source: LocalDataSource = new LocalDataSource();
