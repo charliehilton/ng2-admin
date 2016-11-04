@@ -15,6 +15,19 @@ export const PAGES_MENU = [
         }
       },
       {
+        path: 'startups',  // path for our page
+        data: { // custom menu declaration
+          menu: {
+            title: 'Startups', // menu title
+            icon: 'fa fa-plug', // menu icon
+            pathMatch: 'prefix', // use it if item children not displayed in menu
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        }
+      },
+      {
         path: 'editors',
         data: {
           menu: {

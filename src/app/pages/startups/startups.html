@@ -1,0 +1,10 @@
+<div class="widgets">
+
+  <div class="row">
+    <ba-card title="Startups" baCardClass="with-scroll">
+      <input #search class="search" type="text" placeholder="Search..." (keydown.enter)="onSearch(search.value)">
+      <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+    </ba-card>
+  </div>
+
+</div>

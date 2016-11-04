@@ -13,7 +13,10 @@ import {Component, ViewEncapsulation} from '@angular/core';
       </div>
     </div>
     <footer class="al-footer clearfix">
-      <div class="al-footer-right">Created with <i class="ion-heart"></i></div>
+      
+      <div class="al-copy" style="float: right">&copy; <a href="http://plugandplaytechcenter.com/">Plug and Play</a> 2016</div>
+      
+      <!-- <div class="al-footer-right">Created with <i class="ion-heart"></i></div>
       <div class="al-footer-main clearfix">
         <div class="al-copy">&copy; <a href="http://akveo.com">Akveo</a> 2016</div>
         <ul class="al-share clearfix">
@@ -22,7 +25,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
           <li><i class="socicon socicon-google"></i></li>
           <li><i class="socicon socicon-github"></i></li>
         </ul>
-      </div>
+      </div> -->
     </footer>
     <ba-back-top position="200"></ba-back-top>
     `
