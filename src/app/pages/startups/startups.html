@@ -1,8 +1,17 @@
 <div class="widgets">
 
   <div class="row">
-    <ba-card title="Startups" baCardClass="with-scroll">
-      <input #search class="search" type="text" placeholder="Search..." (keydown.enter)="onSearch(search.value)">
+    <ba-card title="Master List" baCardClass="with-scroll">
+      
+      <div class="col-xs-6 col-md-4">
+        <div class="input-group" style="margin-left: -45px">
+            <input #search type="text" class="search form-control with-primary-addon" placeholder="Search for..." (keyup)="onSearch(search.value)">
+            <!--<span class="input-group-btn">
+                <button class="btn btn-danger" type="button">Go!</button>
+            </span>-->
+        </div>      
+      </div>
+      <!-- <input #search class="search" type="text" placeholder="Search..." (keyup)="onSearch(search.value)"> -->
       <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
     </ba-card>
   </div>
