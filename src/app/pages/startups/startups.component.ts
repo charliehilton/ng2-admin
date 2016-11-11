@@ -7,7 +7,8 @@ import { LocalDataSource } from 'ng2-smart-table';
   selector: 'startups',
   encapsulation: ViewEncapsulation.None,
   styles: [require('./startups.scss')],
-  template: require('./startups.html')
+  template: require('./startups.html'),
+  providers: [StartupsService]
 })
 export class StartupsComponent {
 
@@ -28,7 +29,7 @@ export class StartupsComponent {
       deleteButtonContent: '<i class="ion-trash-a"></i>',
       confirmDelete: true
     },
-    columns: {
+    /*columns: {
       id: {
         title: 'ID',
         type: 'number'
@@ -53,42 +54,84 @@ export class StartupsComponent {
         title: 'Age',
         type: 'number'
       }
-    }
-    /*columns: {
+    }*/
+    columns: {
       companyname: {
         title: 'Company Name',
-        type: 'string'
-      },
-      blurb: {
-        title: 'Blurb',
-        type: 'string'
-      },
-      contact: {
-        title: 'Contact',
         type: 'string'
       },
       stage: {
         title: 'Stage',
         type: 'string'
       },
-      email: {
-        title: 'E-mail',
+      industries: {
+        title: 'Indistries',
         type: 'string'
       },
-      age: {
-        title: 'Age',
-        type: 'number'
+      hqCity: {
+        title: 'HQ City',
+        type: 'string'
+      },
+      hqState: {
+        title: 'HQ State',
+        type: 'string'
+      },
+      founded: {
+        title: 'Founded',
+        type: 'string'
+      },
+      application: {
+        title: 'Industry Application',
+        type: 'string'
+      },
+      tags: {
+        title: 'Tags',
+        type: 'string'
+      },
+      program: {
+        title: 'Program',
+        type: 'string'
+      },
+      batch: {
+        title: 'Batch',
+        type: 'string'
+      },
+      investors: {
+        title: 'Active Investors',
+        type: 'string'
       }
-    }*/
+      
+    }
   };
 
   source: LocalDataSource = new LocalDataSource();
 
+/*  constructor(protected service: StartupsService) {
+    this.service.getBusiness().then((data) => {
+      this.source.load(data);
+    });
+  }*/
   constructor(protected service: StartupsService) {
     this.service.getData().then((data) => {
       this.source.load(data);
     });
   }
+
+  /*getData: string;
+
+  constructor (private _httpService: StartupsService) {
+      
+            this.source.load();
+  }
+    
+  getTest() {
+      this._httpService.getCompany()
+          .subscribe(
+              data => this.getData = JSON.stringify(data),
+              error => alert(error),
+              () => console.log("Got Company")
+          );
+  }*/
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
@@ -101,8 +144,8 @@ export class StartupsComponent {
   onSearch(query: string = ''): void {
   this.source.setFilter([
     // fields we want to include in the search
-    {
-      field: 'ID',
+    /*{
+      field: 'id',
       search: query
     },
     {
@@ -110,13 +153,58 @@ export class StartupsComponent {
       search: query
     },
     {
-      field: 'Last Name',
+      field: 'lastName',
       search: query
     },
     {
-      field: 'Username',
+      field: 'username',
+      search: query
+    },
+    {
+      field: 'email',
+      search: query
+    }*/
+    {
+      field: 'companyname',
+      search: query
+    },
+    {
+      field: 'stage',
+      search: query
+    },
+    {
+      field: 'industries',
+      search: query
+    },
+    {
+      field: 'hqCity',
+      search: query
+    },
+    {
+      field: 'hqState',
+      search: query
+    },
+    {
+      field: 'founded',
+      search: query
+    },
+    {
+      field: 'tags',
+      search: query
+    },
+    {
+      field: 'program',
+      search: query
+    },
+    {
+      field: 'batch',
+      search: query
+    },
+    {
+      field: 'investors',
       search: query
     }
+    
   ], false); 
   // second parameter specifying whether to perform 'AND' or 'OR' search 
   // (meaning all columns should contain search query or at least one)
