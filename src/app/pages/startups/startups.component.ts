@@ -29,32 +29,6 @@ export class StartupsComponent {
       deleteButtonContent: '<i class="ion-trash-a"></i>',
       confirmDelete: true
     },
-    /*columns: {
-      id: {
-        title: 'ID',
-        type: 'number'
-      },
-      firstName: {
-        title: 'First Name',
-        type: 'string'
-      },
-      lastName: {
-        title: 'Last Name',
-        type: 'string'
-      },
-      username: {
-        title: 'Username',
-        type: 'string'
-      },
-      email: {
-        title: 'E-mail',
-        type: 'string'
-      },
-      age: {
-        title: 'Age',
-        type: 'number'
-      }
-    }*/
     columns: {
       companyname: {
         title: 'Company Name',
@@ -106,32 +80,11 @@ export class StartupsComponent {
 
   source: LocalDataSource = new LocalDataSource();
 
-/*  constructor(protected service: StartupsService) {
-    this.service.getBusiness().then((data) => {
-      this.source.load(data);
-    });
-  }*/
   constructor(protected service: StartupsService) {
     this.service.getData().then((data) => {
       this.source.load(data);
     });
   }
-
-  /*getData: string;
-
-  constructor (private _httpService: StartupsService) {
-      
-            this.source.load();
-  }
-    
-  getTest() {
-      this._httpService.getCompany()
-          .subscribe(
-              data => this.getData = JSON.stringify(data),
-              error => alert(error),
-              () => console.log("Got Company")
-          );
-  }*/
 
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
@@ -144,26 +97,6 @@ export class StartupsComponent {
   onSearch(query: string = ''): void {
   this.source.setFilter([
     // fields we want to include in the search
-    /*{
-      field: 'id',
-      search: query
-    },
-    {
-      field: 'firstName',
-      search: query
-    },
-    {
-      field: 'lastName',
-      search: query
-    },
-    {
-      field: 'username',
-      search: query
-    },
-    {
-      field: 'email',
-      search: query
-    }*/
     {
       field: 'companyname',
       search: query
@@ -209,5 +142,52 @@ export class StartupsComponent {
   // second parameter specifying whether to perform 'AND' or 'OR' search 
   // (meaning all columns should contain search query or at least one)
   // 'AND' by default, so changing to 'OR' by setting false here
+  }
 }
-}
+       /*columns: {
+      id: {
+        title: 'ID',
+        type: 'number'
+      },
+      firstName: {
+        title: 'First Name',
+        type: 'string'
+      },
+      lastName: {
+        title: 'Last Name',
+        type: 'string'
+      },
+      username: {
+        title: 'Username',
+        type: 'string'
+      },
+      email: {
+        title: 'E-mail',
+        type: 'string'
+      },
+      age: {
+        title: 'Age',
+        type: 'number'
+      }
+    }*/
+
+    /*{
+      field: 'id',
+      search: query
+    },
+    {
+      field: 'firstName',
+      search: query
+    },
+    {
+      field: 'lastName',
+      search: query
+    },
+    {
+      field: 'username',
+      search: query
+    },
+    {
+      field: 'email',
+      search: query
+    }*/

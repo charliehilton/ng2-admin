@@ -4,27 +4,27 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class StartupsService {
-   constructor (private _http: Http) {}
-
-   getBusiness(): Promise<any> {
-        return new Promise((resolve, reject) => {
-        let headers = new Headers({ 'Accept': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-        setTimeout(() => {
-        resolve(this._http.get('http://localhost:8080/plugandplay/api/v1/business/2',options)
-            .map(res => res.json())
-        );
-        }, 2000);
-        });
-  }
-
-  getCompany() {
+    
+    constructor (private _http: Http) {}
+    
+    StartupsData = this.getBusiness().toPromise();
+    
+    getBusiness() {
         let headers = new Headers({ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         return this._http.get('http://localhost:8080/plugandplay/api/v1/businesses/all',options)
             .map(res => res.json());
     }
-    StartupsData = this.getCompany().toPromise();
+    
+    getData(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(this.StartupsData);
+      }, 2000);
+    });
+    }
+}
+
   /*StartupsData = [
     {
       id: 1,
@@ -59,13 +59,3 @@ export class StartupsService {
       age: '20'
     }    
     ];*/
-  
-  getData(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(this.StartupsData);
-      }, 2000);
-    });
-  }
-
-}
