@@ -12,7 +12,7 @@ export class StartupsService {
     getBusiness() {
         let headers = new Headers({ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        return this._http.get('http://localhost:8080/plugandplay/api/v1/businesses/all',options)
+        return this._http.get('http://54.145.172.103:8080/plugandplay/api/v1/businesses/all',options)
             .map(res => res.json());
     }
     
