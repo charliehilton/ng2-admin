@@ -10,9 +10,9 @@ export class BaThemeConfig {
   }
 
   private _config() {
-    /*this._baConfig.changeTheme({name: 'ng2'});
+    this._baConfig.changeTheme({name: 'plugandplay'});
 
-    let colorScheme = {
+    /*let colorScheme = {
       primary: '#209e91',
        info: '#2dacd1',
       success: '#90b900',

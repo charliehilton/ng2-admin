@@ -39,7 +39,7 @@ export class StartupsComponent {
         type: 'string'
       },
       industries: {
-        title: 'Indistries',
+        title: 'Industries',
         type: 'string'
       },
       hqCity: {

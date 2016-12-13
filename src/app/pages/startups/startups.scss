@@ -2,12 +2,15 @@
 
 .ng2-smart-table-container table.ng2-smart-table {
   th, td {
-    border: 1px solid $border-light !important;
+    //border: 1px solid $border-light !important;
     line-height: 35px;
     vertical-align: middle;
+    background-color: rgba(255, 255, 255, 0.7);
+   // background-color: #F6F6F6;
   }
 
-  color: $default-text;
+  //color: #4C4C4C;
+  color: #ffffff;
 
   input {
     line-height: 1.5 !important;
@@ -21,7 +24,8 @@
 
   a.ng2-smart-sort-link {
     font-size: 14px !important;
-    color: $default-text;
+    color: #ffffff;
+    //color: #4C4C4C;
     font-weight: $font-bolder;
     &.sort {
       font-weight: $font-bolder !important;
@@ -43,7 +47,8 @@
 
   a.ng2-smart-action {
     font-size: 14px !important;
-    color: $default-text;
+    //color: #4C4C4C;
+    color: #ffffff;
     padding: 0 5px;
     display: inline-block;
 
