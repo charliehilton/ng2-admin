@@ -1,4 +1,6 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, ViewChild, ElementRef, OnInit, ViewEncapsulation} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core'
+import { Observable } from 'rxjs/Rx';
 
 import { StartupsService } from './startups.service';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -10,189 +12,73 @@ import { LocalDataSource } from 'ng2-smart-table';
   template: require('./startups.html'),
   providers: [StartupsService]
 })
-export class StartupsComponent {
-
-  query: string = '';
-
-  settings = {
-    add: {
-      addButtonContent: '<i class="ion-ios-plus-outline"></i>',
-      createButtonContent: '<i class="ion-checkmark"></i>',
-      cancelButtonContent: '<i class="ion-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="ion-edit"></i>',
-      saveButtonContent: '<i class="ion-checkmark"></i>',
-      cancelButtonContent: '<i class="ion-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="ion-trash-a"></i>',
-      confirmDelete: true
-    },
-    columns: {
-      companyname: {
-        title: 'Company Name',
-        type: 'string'
-      },
-      stage: {
-        title: 'Stage',
-        type: 'string'
-      },
-      industries: {
-        title: 'Industries',
-        type: 'string'
-      },
-      hqCity: {
-        title: 'HQ City',
-        type: 'string'
-      },
-      hqState: {
-        title: 'HQ State',
-        type: 'string'
-      },
-      founded: {
-        title: 'Founded',
-        type: 'string'
-      },
-      application: {
-        title: 'Industry Application',
-        type: 'string'
-      },
-      tags: {
-        title: 'Tags',
-        type: 'string'
-      },
-      program: {
-        title: 'Program',
-        type: 'string'
-      },
-      batch: {
-        title: 'Batch',
-        type: 'string'
-      },
-      investors: {
-        title: 'Active Investors',
-        type: 'string'
-      }
-      
-    }
-  };
-
-  source: LocalDataSource = new LocalDataSource();
-
-  constructor(protected service: StartupsService) {
-    this.service.getData().then((data) => {
-      this.source.load(data);
-    });
-  }
-
-  onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
-  }
-
-  onSearch(query: string = ''): void {
-    var arr : string[] = query.split(" ");
-    
-  //for (let entry of arr) {
+export class StartupsComponent implements OnInit {
+  @ViewChild('input')
+  input: ElementRef;
+  companies: any[];
   
-    this.source.setFilter([
-    // fields we want to include in the search
-    {
-      field: 'companyname',
-      search: query
-    },
-    {
-      field: 'stage',
-      search: query
-    },
-    {
-      field: 'industries',
-      search: query
-    },
-    {
-      field: 'hqCity',
-      search: query
-    },
-    {
-      field: 'hqState',
-      search: query
-    },
-    {
-      field: 'founded',
-      search: query
-    },
-    {
-      field: 'tags',
-      search: query
-    },
-    {
-      field: 'program',
-      search: query
-    },
-    {
-      field: 'batch',
-      search: query
-    },
-    {
-      field: 'investors',
-      search: query
+
+  constructor(private _startupService: StartupsService) {
+    _startupService.getCompanies().subscribe(data => this.companies = data,
+    error => console.error('Error: ' + error),
+        () => console.log('Completed!')
+    )
+  }
+
+    ngOnInit(){
+      let eventObservable = Observable.fromEvent(this.input.nativeElement, 'keyup')
+      eventObservable.subscribe();
     }
-    
-  ], false);
-  //} 
-  // second parameter specifying whether to perform 'AND' or 'OR' search 
-  // (meaning all columns should contain search query or at least one)
-  // 'AND' by default, so changing to 'OR' by setting false here
+
+}
+
+@Pipe({
+  name: 'searchPipe',
+  pure: false
+})
+export class SearchPipe implements PipeTransform {
+  transform(data: any[], searchTerm: string): any[] {
+      searchTerm = searchTerm.toUpperCase();
+      return data.filter(item => {
+        return item.toUpperCase().indexOf(searchTerm) !== -1 
+      });
   }
 }
-       /*columns: {
-      id: {
-        title: 'ID',
-        type: 'number'
-      },
-      firstName: {
-        title: 'First Name',
-        type: 'string'
-      },
-      lastName: {
-        title: 'Last Name',
-        type: 'string'
-      },
-      username: {
-        title: 'Username',
-        type: 'string'
-      },
-      email: {
-        title: 'E-mail',
-        type: 'string'
-      },
-      age: {
-        title: 'Age',
-        type: 'number'
-      }
-    }*/
 
-    /*{
-      field: 'id',
-      search: query
-    },
-    {
-      field: 'firstName',
-      search: query
-    },
-    {
-      field: 'lastName',
-      search: query
-    },
-    {
-      field: 'username',
-      search: query
-    },
-    {
-      field: 'email',
-      search: query
-    }*/
+@Pipe({
+    name: 'searchFilter'
+})
+
+export class PipeFilter implements PipeTransform {
+    transform(items: any[], term: any[]): any {
+        return items.filter(item => item.companyName.indexOf(term[0]) !== -1);
+    }
+}   
+
+@Pipe({
+	name: "smArraySearch"
+})
+export class SearchArrayPipe implements PipeTransform {
+	transform(list: Array<{}>, search: string): Array<{}> {
+		if (!list || !search) {
+			return list;
+		}
+
+		//return list.filter((item: { companyName: string}) => !!item.companyName.toLowerCase().match(new RegExp(search.toLowerCase()) ));
+    return list.filter((item: { companyName: string, blurb: string, verticals: string, website: string, pnpContact: string, contactName: string, email: string, stage: string, b2bb2c: string, location: string, city: string, tags: string}) => 
+    (!!item.companyName.toLowerCase().match(new RegExp(search.toLowerCase()))) || 
+    (!!item.blurb.toLowerCase().match(new RegExp(search.toLowerCase()))) ||
+    (!!item.verticals.toLowerCase().match(new RegExp(search.toLowerCase()))) ||
+    (!!item.website.toLowerCase().match(new RegExp(search.toLowerCase()))) ||
+    (!!item.pnpContact.toLowerCase().match(new RegExp(search.toLowerCase()))) ||
+    (!!item.contactName.toLowerCase().match(new RegExp(search.toLowerCase()))) ||
+    (!!item.email.toLowerCase().match(new RegExp(search.toLowerCase()))) ||
+    (!!item.stage.toLowerCase().match(new RegExp(search.toLowerCase()))) ||
+    (!!item.b2bb2c.toLowerCase().match(new RegExp(search.toLowerCase()))) ||
+    (!!item.location.toLowerCase().match(new RegExp(search.toLowerCase()))) ||
+    (!!item.city.toLowerCase().match(new RegExp(search.toLowerCase()))) ||
+    (!!item.tags.toLowerCase().match(new RegExp(search.toLowerCase())))
+    );
+    
+	}
+}

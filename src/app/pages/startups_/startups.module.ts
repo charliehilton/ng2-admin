@@ -3,27 +3,24 @@ import { CommonModule }  from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 
-import { StartupsComponent, SearchPipe, PipeFilter, SearchArrayPipe } from './startups.component';
+import { StartupsComponent } from './startups.component';
 import { StartupsService } from './startups.service';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { routing } from './startups.routing';
-//import { SearchPipe } from './search.pipe'
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     NgaModule,
+    Ng2SmartTableModule,
     routing
   ],
   declarations: [
-    StartupsComponent,
-    SearchPipe,
-    PipeFilter,
-    SearchArrayPipe
+    StartupsComponent
   ],
   providers: [
     StartupsService
-  ],
-
+  ]
 })
 export default class StartupsModule {}

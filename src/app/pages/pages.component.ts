@@ -14,7 +14,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
     </div>
     <footer class="al-footer clearfix">
       
-      <div class="al-copy" style="float: right">&copy; <a href="http://plugandplaytechcenter.com/">Plug and Play</a> 2016</div>
+      <div class="al-copy" style="float: right">&copy; <a style="color: #ffffff" href="http://plugandplaytechcenter.com/">Plug and Play</a> 2017</div>
       
       <!-- <div class="al-footer-right">Created with <i class="ion-heart"></i></div>
       <div class="al-footer-main clearfix">

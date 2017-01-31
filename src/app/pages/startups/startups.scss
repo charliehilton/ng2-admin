@@ -1,64 +1,62 @@
-@import "../../theme/sass/conf/conf";
+@import '../../theme/sass/conf/conf';
 
-.ng2-smart-table-container table.ng2-smart-table {
-  th, td {
-    //border: 1px solid $border-light !important;
-    line-height: 35px;
-    vertical-align: middle;
-    background-color: rgba(255, 255, 255, 0.7);
-   // background-color: #F6F6F6;
-  }
+/*.show-grid div[class^=col-md-12]{
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: rgba($content-text, 0.3);
+  border-radius:7px;
+  margin-bottom:10px;
+}*/
 
-  //color: #4C4C4C;
-  color: #ffffff;
-
-  input {
-    line-height: 1.5 !important;
-  }
-
-  tbody {
-    tr:hover {
-      background: rgba(0, 0, 0, 0.03);
-    }
-  }
-
-  a.ng2-smart-sort-link {
-    font-size: 14px !important;
-    color: #ffffff;
-    //color: #4C4C4C;
-    font-weight: $font-bolder;
-    &.sort {
-      font-weight: $font-bolder !important;
-
-      &::after {
-        border-bottom-color: $default-text !important;
-      }
-    }
-  }
-
-  .ng2-smart-actions {
-    width: 70px;
+/*  .pnp-details div {
+    color: $default-text;
     text-align: center;
-    .actions {
-      float: none;
-      text-align: center;
-    }
+    font-size: 18px;
+    padding: 12px 5px;
   }
 
-  a.ng2-smart-action {
-    font-size: 14px !important;
-    //color: #4C4C4C;
-    color: #ffffff;
-    padding: 0 5px;
-    display: inline-block;
+  .pnp-data div {
+    color: $default-text;
+    text-align: center;
+    font-size: 10px;
+    padding: 12px 5px;
+  }*/
 
-    &.ng2-smart-action-add-add {
-      font-size: 25px !important;
-    }
+/*.pnp-details div {
+    color: $default-text;
+    text-align: center;
+    font-size: 18px;
+    padding: 12px 5px;
+  }*/
+
+/*  .pnp-data div {
+    color: $default-text;
+    text-align: center;
+    font-size: 12px;
+    padding: 12px 5px;
+  }*/
+
+/*  .pnp-companyname div {
+    font-size: 16px;
+    color:#4cbd83;
+    font-family: sans-serif;
+  }*/
+
+/*.col-md-12 {
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius:7px;
+    color: $default-text;
+    text-align: center;
+    font-size: 18px;
+    background-color: rgba($content-text, 0.3);
+    padding: 12px 5px;
+}*/
+
+.grid-h{
+  margin-top: 40px;
+  margin-bottom: 0;
+  &:first-child{
+    margin-top: 0;
   }
-}
-
-nav.ng2-smart-pagination-nav {
-  display: flex;
-  justify-content: center;
 }

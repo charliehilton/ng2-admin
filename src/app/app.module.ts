@@ -5,6 +5,14 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
 
+/*// used to create fake backend
+import { fakeBackendProvider } from './_helpers/index';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { BaseRequestOptions } from '@angular/http';*/
+
+import { AuthGuard } from './_guards/index';
+import { AuthenticationService, UserService } from './_services/index';
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -50,7 +58,14 @@ type StoreType = {
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    AuthGuard,
+    AuthenticationService,
+    UserService
+    // providers used to create fake backend
+    /*fakeBackendProvider,
+    MockBackend,
+    BaseRequestOptions*/
   ]
 })
 

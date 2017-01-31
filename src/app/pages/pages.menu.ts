@@ -26,8 +26,8 @@ export const PAGES_MENU = [
             order: 0
           }
         }
-      },
-      {
+      }//,
+     /* {
         path: 'editors',
         data: {
           menu: {
@@ -48,7 +48,7 @@ export const PAGES_MENU = [
             }
           }
         ]
-      },
+      },*/
       //{
       //  path: 'components',
       //  data: {
@@ -71,7 +71,7 @@ export const PAGES_MENU = [
       //    }
       //  ]
       //},
-      {
+     /* {
         path: 'charts',
         data: {
           menu: {
@@ -252,8 +252,8 @@ export const PAGES_MENU = [
             }
           }
         ]
-      },
-      {
+      },*/
+     /* {
         path: '',
         data: {
           menu: {
@@ -282,7 +282,7 @@ export const PAGES_MENU = [
             }
           }
         ]
-      },
+      }*//*,
       {
         path: '',
         data: {
@@ -337,7 +337,7 @@ export const PAGES_MENU = [
             target: '_blank'
           }
         }
-      }
+      }*/
     ]
   }
 ];

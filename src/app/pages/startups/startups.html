@@ -1,19 +1,69 @@
 <div class="widgets">
 
   <div class="row">
-    <ba-card title="Master List" baCardClass="with-scroll">
-      
-      <div class="col-xs-6 col-md-4">
-        <div class="input-group" style="margin-left: -45px">
-            <input #search type="text" class="search form-control with-primary-addon" placeholder="Search for..." (keyup)="onSearch(search.value)">
-            <!--<span class="input-group-btn">
-                <button class="btn btn-danger" type="button">Go!</button>
-            </span>-->
-        </div>      
+    <div class="col-md-12">
+
+    <ba-card baCardClass="with-scroll"> <!--<ba-card title="Explore" baCardClass="with-scroll">-->
+      <div class="form-group">
+        <input #input type="text" class="form-control form-control-rounded" id="input03" placeholder="Search for...">
       </div>
-      <!-- <input #search class="search" type="text" placeholder="Search..." (keyup)="onSearch(search.value)"> -->
-      <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
-    </ba-card>
+    <!--    <h4 class="grid-h">Mobile, tablet, desktop</h4>
+        <div class="row show-grid">
+          <div class="col-xs-12 col-sm-6 col-md-12">
+            <div>.col-xs-12 .col-sm-6 .col-md-12</div>
+          </div>  
+        </div>-->
+        
+        <div class="row show-grid">
+          <!--<div class="col-md-12 pnp-details">
+            <div class="col-md-2">Company Icon</div>
+            <div class="col-md-2">Company Name</div>
+            <div class="col-md-2">Blurb</div>            
+            <div class="col-md-2">Website</div>
+            <div class="col-md-1">Location</div>
+            <div class="col-md-1">City</div>
+
+            <div class="col-md-1">Verticals</div>
+            <div class="col-md-1">Tags</div>
+
+            <div class="col-md-2">Account Manager: {{PNP Contact}}</div>
+            <div class="col-md-2">Primary Contact: {{Contact Name}}</div>
+            <div class="col-md-2">Primary Email</div>
+            
+          </div>-->
+          <div class="col-md-12" style="padding-top:15px;padding-bottom:15px;box-sizing: border-box; border-radius: 7px;margin-bottom: 10px; background-color: rgba(255, 255, 255, 0.8);" *ngFor="let obj of companies | smArraySearch: input.value">
+            <div class="col-md-1" style="padding-left:0px;"><img src="http://3.bp.blogspot.com/-FI6eeNNTcy4/VPw04yX3_qI/AAAAAAAAAFk/vEocwQMf0-8/s1600/startup-512.png" alt="Business Profile" style="width:80px;height:80px;"></div>
+            <div class="col-md-5" style="padding-left:0px;">
+              <div style="font-size: 20px; color: #000000; opacity: .87; font-family: 'Arial Narrow', Arial, sans-serif; text-shadow: 1px 1px 1px #aaaaaa; padding-bottom: 5px">{{obj.companyName}}</div>
+              <div style="font-size: 11px; color: #000000; opacity: .54;">{{obj.blurb}}</div>
+              <div style="overflow-wrap: break-word;font-size: 10px"><a style="color: #24a2ff" href="{{obj.website}}">{{obj.website}}</a></div>
+              <div style="font-size: 13px; color: #000000; opacity: .38; font-weight: 400">{{obj.city}}</div>
+              <div style="font-size: 12px; color: #000000; opacity: .38;">{{obj.location}}</div>
+            </div>
+            <div class="col-md-3">
+              <div style="font-size: 10px; color: #000000; opacity: .38;">Verticals:</div>
+              <div style="font-size: 12px; color: #000000; opacity: .54;">{{obj.verticals}}</div>
+              <div style="font-size: 10px; color: #000000; opacity: .38;">Tags:</div>
+              <div style="font-size: 12px; color: #000000; opacity: .54;">{{obj.tags}}</div>
+            </div>
+            <div class="col-md-3">
+              <div *ngIf="obj?.pnpContact" style="font-size: 10px; color: #000000; opacity: .38;">Account Manager:</div>
+              <div *ngIf="obj?.pnpContact" style="font-size: 12px; color: #000000; opacity: .54;">{{obj.pnpContact}}</div>
+              <div *ngIf="obj?.contactName" style="font-size: 10px; color: #000000; opacity: .38;">Primary Contact:</div>
+              <div *ngIf="obj?.contactName" style="font-size: 12px; color: #000000; opacity: .54;">{{obj.contactName}}</div> 
+              <div *ngIf="obj?.email" style="font-size: 10px; color: #000000; opacity: .38;">Email:</div>
+              <div *ngIf="obj?.email" style="font-size: 12px; color: #000000; opacity: .54;">{{obj.email}}</div>
+            </div>
+        </div>
+        </div>
+
+      <!--  <div *ngFor='#key of StartupsData'>
+          <h3>{{dataObject[key].id}}</h3>
+          <p>{{dataObject[key].companyName}}</p>
+        </div>-->
+
+      </ba-card>
+    </div>
   </div>
 
 </div>
