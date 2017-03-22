@@ -26,7 +26,21 @@ export const PAGES_MENU = [
             order: 0
           }
         }
-      }//,
+      },
+      {
+        path: 'portfolio',  // path for our page
+        data: { // custom menu declaration
+          menu: {
+            title: 'Portfolio', // menu title
+            icon: 'fa fa-certificate', // menu icon
+            pathMatch: 'prefix', // use it if item children not displayed in menu
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        }
+      }
+      //,
      /* {
         path: 'editors',
         data: {

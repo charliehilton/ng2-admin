@@ -2,29 +2,29 @@ import {Component, ViewChild, ElementRef, OnInit, ViewEncapsulation} from '@angu
 import {Pipe, PipeTransform} from '@angular/core'
 import { Observable } from 'rxjs/Rx';
 
-import { StartupsService } from './startups.service';
+import { PortfolioService } from './portfolio.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import {Subscription} from 'rxjs';
 //import {BaThemePreloader} from '../../theme/services';
 
 
 @Component({
-  selector: 'startups',
+  selector: 'portfolio',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./startups.scss'),require('./busy.scss')],
-  template: require('./startups.html'),
-  providers: [StartupsService]
+  styles: [require('./portfolio.scss'),require('./busy.scss')],
+  template: require('./portfolio.html'),
+  providers: [PortfolioService]
 })
-export class StartupsComponent implements OnInit {
+export class PortfolioComponent implements OnInit {
   @ViewChild('input')
   input: ElementRef;
   companies: any[];
   busy: Subscription;
 
-  constructor(private _startupService: StartupsService) {
+  constructor(private _portfolioService: PortfolioService) {
 
     
-    this.busy = _startupService.getVentures().subscribe(data => this.companies = data,
+    this.busy = _portfolioService.getVentures().subscribe(data => this.companies = data,
     error => console.error('Error: ' + error),
         () => console.log('Completed!')
     )

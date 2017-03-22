@@ -3,9 +3,9 @@ import { CommonModule }  from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 
-import { StartupsComponent, SearchPipe, PipeFilter, SearchArrayPipe } from './startups.component';
-import { StartupsService } from './startups.service';
-import { routing } from './startups.routing';
+import { PortfolioComponent, SearchPipe, PipeFilter, SearchArrayPipe } from './portfolio.component';
+import { PortfolioService } from './portfolio.service';
+import { routing } from './portfolio.routing';
 import {BusyModule} from 'angular2-busy';
 //import { SearchPipe } from './search.pipe'
 
@@ -18,13 +18,13 @@ import {BusyModule} from 'angular2-busy';
     routing
   ],
   declarations: [
-    StartupsComponent,
+    PortfolioComponent,
     SearchPipe,
     PipeFilter,
     SearchArrayPipe
   ],
   providers: [
-    StartupsService
+    PortfolioService
   ],
 
 })

@@ -24,7 +24,9 @@ const routes: Routes = [
       //{ path: 'forms', loadChildren: () => System.import('./forms/forms.module') },
       //{ path: 'tables', loadChildren: () => System.import('./tables/tables.module') },
       //{ path: 'maps', loadChildren: () => System.import('./maps/maps.module') },
-      { path: 'startups',  loadChildren: () => System.import('./startups/startups.module') }
+      { path: 'startups',  loadChildren: () => System.import('./startups/startups.module') },
+      { path: 'company',  loadChildren: () => System.import('./company/company.module') },
+      { path: 'portfolio',  loadChildren: () => System.import('./portfolio/portfolio.module') }
     ]
   }
 ];

@@ -1,0 +1,217 @@
+<div class="widgets">
+
+  <div class="row">
+    <div class="col-md-12">
+
+    <ba-card baCardClass="with-scroll">
+        
+        <div class="row show-grid">
+          <div class="col-md-8" style="margin-right:0px;">
+            <div class="col-md-5" style="padding:0px;margin:0px;">
+            <div style="background-color:white;height:10px;margin-top:8px;margin-right:10px;margin-left:10px;border-top-style:solid;border-top-width:1px;border-top-color:#d9d9d9;border-left-style:solid;border-left-width:1px;border-left-color:#d9d9d9;border-right-style:solid;border-right-width:1px;border-right-color:#d9d9d9;"></div>
+            </div> <!--col-md-5-->
+            <div class="col-md-12"></div>
+            <div class="col-md-12" style="padding:0px;margin:0px;">
+            <div id="nameBanner" style="background-color:#3c3c3c;height:45px;margin-left:0px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#8a8a8a;">
+              <div style="height:14px;"></div>
+              <span style="letter-spacing:1px;font-family:arial;color:white;font-weight:bold;font-size:25px;padding-left:15px;">{{company?.companyName}}</span>
+            </div>
+            </div> <!--col-md-12-->
+            <div style="position:absolute;margin-top:63px;margin-left:0px;margin-right:0px;width:0;height:0;border-top: 6px solid #646464;border-left: 10px solid transparent;"></div>
+            <div class="col-md-5" style="padding:0px;margin:0px;padding-right:20px;">
+            <div class="col-md-12" id="businessInfo" style="padding-top:10px;padding-bottom:10px;margin-left:10px;margin-right:10px;background-color:white;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#d9d9d9;border-left-style:solid;border-left-width:1px;border-left-color:#d9d9d9;border-right-style:solid;border-right-width:1px;border-right-color:#d9d9d9;padding-right: 0px;padding-left: 0px;">
+              <div class="col-md-12" style="padding:0px;margin:0px;">
+              <ul style="padding: 0px;margin: 0px;">
+                <li style="display:block;">
+                  <i class="fa fa-user-circle-o" *ngIf="company?.contactName" aria-hidden="true" style="display:inline-block;color:#3c3c3c;padding-left: 10px;font-size: 18px;"></i>  
+                  <div *ngIf="company?.contactName" style="display:inline-block;margin-left:6px;font-family:arial;color:#343434;font-size:12px;">{{company?.contactName}}</div> 
+                </li>
+                <li style="display:block;">
+                  <i class="fa fa-mobile" *ngIf="company?.phoneNumber" aria-hidden="true" style="display:inline-block;color:#3c3c3c;padding-left: 14px;font-size: 22px;"></i>  
+                  <div *ngIf="company?.phoneNumber" style="display:inline-block;margin-top:4px;margin-left:6px;font-family:arial;color:#343434;font-size:12px;">{{company?.phoneNumber}}</div> 
+                </li>
+                <li style="display:block;">
+                  <i class="fa fa-envelope-o" *ngIf="company?.email" aria-hidden="true" style="display:inline-block;color:#3c3c3c;padding-left: 11px;font-size: 16px;"></i>  
+                  <div *ngIf="company?.email" style="display:inline-block;margin-top:4px;margin-left:6px;font-family:arial;color:#343434;font-size:12px;">{{company?.email}}</div> 
+                </li>
+                <li *ngIf="company?.website" style="display:block;">
+                  <i class="fa fa-external-link" *ngIf="company?.website" aria-hidden="true" style="display:inline-block;color:#3c3c3c;padding-left: 12px;font-size: 16px;"></i>  
+                  <div *ngIf="company?.website" style="display:inline-block;margin-top:4px;margin-left:6px;font-family:arial;color:#343434;font-size:12px;"><a style="color: #343434" href="{{company.website}}">{{company.website}}</a></div> 
+                </li>
+                <li style="display:block;">
+                  <i class="fa fa-globe" *ngIf="company?.city" aria-hidden="true" style="display:inline-block;color:#3c3c3c;padding-left: 12px;font-size: 16px;"></i>  
+                  <div *ngIf="company?.city" style="display:inline-block;margin-top:4px;margin-left:6px;font-family:arial;color:#343434;font-size:12px;">{{company?.city}}, {{company?.location}}</div> 
+                </li>
+                <li style="display:block;padding-left:5px;padding-right:5px">
+                    <hr style="height:1px;border-width:0;color:#d9d9d9;background-color:#d9d9d9;">
+                </li>
+                
+              </ul>
+              </div>
+              <div class="col-md-12" style="padding:0px;margin:0px;">
+                  <div class="col-md-12" style="padding:0px;margin:0px;">
+                  <div class="col-md-6" style="padding:10px;margin:0px;">
+                    <div class="col-md-12" id="count-bubble" style="padding:0px;">
+                      <p *ngIf="company?.totalMoneyRaised" style="text-align:center;margin-top:8px;font-family:arial;color:#3c3c3c;overflow:hidden;padding-top:2px;padding-bottom:4px;">{{company?.totalMoneyRaised}}</p>
+                      <p *ngIf="!company?.totalMoneyRaised" style="text-align:center;margin-top:8px;font-family:arial;color:#3c3c3c;overflow:hidden;padding-top:2px;padding-bottom:4px;">N/A</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6" style="padding:10px;margin:0px;">
+                    <div class="col-md-12" id="count-bubble" style="padding:0px;">
+                      <p *ngIf="company?.stage" style="margin-top:8px;font-family:arial;color:#3c3c3c;overflow:hidden;padding-top:2px;padding-bottom:4px;">{{company?.stage}}</p>
+                      <p *ngIf="!company?.stage" style="margin-top:8px;font-family:arial;color:#3c3c3c;overflow:hidden;padding-top:2px;padding-bottom:4px;">N/A</p>
+                    </div>
+                  </div>  
+                  </div><!--col-md-12-->
+                  <div class="col-md-12" style="padding:0px;margin:0px;">                      
+                  <div class="col-md-6" style="display:inline-block;vertical-align:top;padding:0px;">
+                    <p style="text-align:center;margin-top:0px;margin-bottom:0px;font-family:arial;color:#343434;font-size:11px;">Total Money Raised</p>	
+                  </div>
+                  <div class="col-md-6" style="display:inline-block;padding:0px;">
+                    <p style="text-align:center;margin-top:0px;margin-bottom:0px;font-family:arial;color:#343434;font-size:11px;">Stage</p>
+                  </div>
+                  </div><!--col-md-12-->
+                  <div class="col-md-12" style="padding:0px;margin:0px;">
+                  <div class="col-md-6" style="padding:10px;margin:0px;">
+                    <div class="col-md-12" id="count-bubble" style="padding:0px;">
+                        <p *ngIf="company?.employees" id="fanCount" style="margin-top:8px;font-family:arial;color:#3c3c3c;overflow:hidden;padding-top:2px;padding-bottom:4px;">{{company?.employees}}</p>
+                        <p *ngIf="!company?.employees" id="fanCount" style="margin-top:8px;font-family:arial;color:#3c3c3c;overflow:hidden;padding-top:2px;padding-bottom:4px;">N/A</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6" style="padding:10px;margin:0px;">
+                    <div class="col-md-12" id="count-bubble" style="padding:0px;">
+                        <p *ngIf="company?.b2bb2c" id="recommendCount" style="margin-top:8px;font-family:arial;color:#3c3c3c;overflow:hidden;padding-top:2px;padding-bottom:4px;">{{company?.b2bb2c}}</p>
+                        <p *ngIf="!company?.b2bb2c" id="recommendCount" style="margin-top:8px;font-family:arial;color:#3c3c3c;overflow:hidden;padding-top:2px;padding-bottom:4px;">N/A</p>
+                    </div>
+                  </div>
+                  </div><!--col-md-12-->
+                  <div class="col-md-12" style="padding:0px;margin:0px;">
+                  <div class="col-md-6" style="display:inline-block;padding:0px;">
+                    <p style="text-align:center;margin-top:0px;margin-bottom:0px;font-family:arial;color:#343434;font-size:11px;">Employees</p>
+                  </div>
+                  <div class="col-md-6" style="display:inline-block;padding:0px;">
+                    <p style="text-align:center;margin-top:0px;margin-bottom:0px;font-family:arial;color:#343434;font-size:11px;">B2B B2C</p>
+                  </div>
+                  </div><!--col-md-12-->
+              </div>
+            </div>
+            </div> <!--col-md-5-->
+            
+            <div class="col-md-7" style="padding-left: 5px;padding-right: 10px;">
+                <div class="col-md-12" *ngIf="company?.blurb" style="padding-left:5px;padding-right:5px;">
+                  <ul style="padding:0px;margin-top:10px">
+                    <li style="margin-bottom:5px;display:inline-block;">
+                      <p style="margin-top:0px;margin-bottom:0px;font-family:arial;color:#278cb8;font-size:17px;">Company Blurb</p>
+                    </li>
+                    <li style="line-height: 15px;display:inline-block;">
+                      <p id="blurb" style="font-family:arial;color:#3c3c3c;font-size:14px;display:inline;">{{company?.blurb}}</p>
+                      <p id="seeMore" style="font-family:arial;color:#278cb8;font-size:10px;display:inline;">See More</p>
+                    </li>
+                  </ul>
+                  <!--<div  style="display:inline-block;color:#343434;font-size:11px;"></div> -->
+                </div>
+                <div *ngIf="company?.background" class="col-md-12" style="padding:0px;background-color:#278cb8;border-radius:4px;">
+                  <p id="statusText" style="padding-top:4px;padding-bottom:5px;margin-left:10px;margin-right:10px;margin-top:0px;margin-bottom:0px;font-family:arial;font-size:12px;color:#e7e7e7;">{{company?.background}}</p>
+                  <!--<div *ngIf="company?.background" style="display:inline-block;color:#343434;font-size:11px;">{{company?.background}}</div> -->
+                </div>
+                <div class="col-md-12" id="profileButtons" style="margin-left:0px;margin-right:0px;">
+                  
+                    <div class="col-md-6" style="padding:0px">
+                      <p style="text-align:center;font-size: 10px;margin-top:5px;margin-bottom:5px;font-family:arial;font-size:10px;color:#3c3c3c;">Add to top 100!</p>
+                      <div style="width:50%; margin:auto;">
+                        <a href="#" class="sendMessage" onclick="sendMessage()"><p style="text-align: center;color: #e7e7e7;margin:0px;">Top 100</p></a>
+                      </div>
+                      <!--TODO add code for if already part of top 100-->
+                    </div>
+                    <div class="col-md-6" style="padding:0px;">
+                      <p id="becomeFanText" style="text-align: center;font-size: 10px ;margin-top:5px;margin-bottom:5px;font-family:arial;font-size:10px;color:#3c3c3c;">Get more insights!</p>
+                      <div style="width:50%; margin:auto;">
+                        <a href="#" class="becomeFan" onclick="becomeFan(this)" id="$profile.getId()"><p style="text-align: center;color: #e7e7e7;">Deal Flows</p></a>
+                      </div>
+                    </div>
+                </div>
+                
+            </div>
+          </div> <!--col-md-8-->
+          
+          <div class="col-md-4 offset-md-8" style="margin:0px">
+              <div class="col-md-12" id="profilePicDiv" style="margin-right:0px;margin-top:10px;">
+                <!-- <img id="profilePic" src="/tourmee/ajax/profile_pic_business?id=$profile.getId()" style="margin-left:3px;margin-top:3px;"/> -->
+                <img id="profilePic" src="http://3.bp.blogspot.com/-FI6eeNNTcy4/VPw04yX3_qI/AAAAAAAAAFk/vEocwQMf0-8/s1600/startup-512.png" style="width: inherit;height: inherit;border-style: solid;border-color: white;border-radius: 4px;;padding: 0px;"/>
+              </div>
+              <div class="col-md-12" style="text-align:right;margin-top:2px;">
+                <p *ngIf="company?.portfolio" style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;font-weight:400; display: inline;font-size: 12px;margin-right:5px;color:#ffdd8a;">PORTFOLIO COMPANY</p>
+                <div id="circleActive"></div>
+                <div id="circle"></div>
+                <div id="circle"></div>
+                <div id="circle"></div>
+                <div id="circle"></div>
+                <p style="font-family:arial;font-size:12px;color:#3c3c3c;display:inline;margin-left:15px;">&laquo;</p>		
+                <p style="font-family:arial;font-size:10px;color:#3c3c3c;display:inline;margin-right:55px;">View more photos</p>
+              </div>
+          </div>
+          <div class="col-md-12">
+            <md-tab-group [selectedIndex]="0" >
+            <md-tab>
+              <template md-tab-label>More Info</template>
+              <template md-tab-content>
+                <div *ngIf="company?.pnpContact" style="font-size: 10px; color: #ffffff; opacity: .38;">Account Manager:</div>
+                <div *ngIf="company?.pnpContact" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company?.pnpContact}}</div>
+                <div *ngIf="company?.verticals" style="font-size: 10px; color: #ffffff; opacity: .38;">Verticals:</div>
+                <div *ngIf="company?.verticals" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.verticals}}</div>
+                <div *ngIf="company?.tags" style="font-size: 10px; color: #ffffff; opacity: .38;">Tags:</div>
+                <div *ngIf="company?.tags" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.tags}}</div>
+                <div *ngIf="company?.competition" style="font-size: 10px; color: #ffffff; opacity: .38;">Competition:</div>
+                <div *ngIf="company?.competition" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.competition}}</div>
+                <div *ngIf="company?.advantage" style="font-size: 10px; color: #ffffff; opacity: .38;">Advantage:</div>
+                <div *ngIf="company?.advantage" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.advantage}}</div>
+                <div *ngIf="company?.founded" style="font-size: 10px; color: #ffffff; opacity: .38;">Founded:</div>
+                <div *ngIf="company?.founded" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.founded}}</div>
+                <div *ngIf="company?.partnerInterests" style="font-size: 10px; color: #ffffff; opacity: .38;">Partner Interests:</div>
+                <div *ngIf="company?.partnerInterests" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.partnerInterests}}</div>
+                <div *ngIf="company?.caseStudy" style="font-size: 10px; color: #ffffff; opacity: .38;">Case Study:</div>
+                <div *ngIf="company?.caseStudy" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.caseStudy}}</div>
+                <div *ngIf="company?.comments" style="font-size: 10px; color: #ffffff; opacity: .38;">Comments:</div>
+                <div *ngIf="company?.comments" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.comments}}</div>
+                <div *ngIf="company?.dataOfInvestment" style="font-size: 10px; color: #ffffff; opacity: .38;">Date of Investment:</div>
+                <div *ngIf="company?.dataOfInvestment" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.dataOfInvestment}}</div>
+                <div *ngIf="company?.materials" style="font-size: 10px; color: #ffffff; opacity: .38;">Materials:</div>
+                <div *ngIf="company?.materials" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.materials}}</div>
+                <div *ngIf="company?.timestamp" style="font-size: 10px; color: #ffffff; opacity: .38;">Time Stamp:</div>
+                <div *ngIf="company?.timestamp" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.timestamp}}</div>
+                <div *ngIf="company?.id" style="font-size: 10px; color: #ffffff; opacity: .38;">Database ID:</div>
+                <div *ngIf="company?.id" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.id}}</div>
+              </template>
+            </md-tab>
+            <md-tab>
+              <template md-tab-label>Activity Log</template>
+              <template md-tab-content>
+                <h1>Activity Log</h1>
+                <p></p>
+              </template>
+            </md-tab>
+             <md-tab>
+              <template md-tab-label>Deal Flows</template>
+              <template md-tab-content>
+                <h1>Deal Flows</h1>
+                <p></p>
+              </template>
+            </md-tab>
+          </md-tab-group>
+          </div>
+<!--          <div class="col-md-12" id="tabs">
+            <ul>
+              <li style="width:68px;"><img id="triangle" src="/tourmee/img/profile/triangle.png"/><a href="#tourbuzz">Tourbuzz</a></li>
+              <li style="width:27px;"><img id="triangle" src="/tourmee/img/profile/triangle.png"/><a href="#info">Info</a></li>
+              <li style="width:40px;"><img id="triangle" src="/tourmee/img/profile/triangle.png"/><a href="#menu">Menu</a></li>
+              <li style="width:50px;"><img id="triangle" src="/tourmee/img/profile/triangle.png"/><a href="#photos">Photos</a></li>
+              <li style="width:89px;"><img id="triangle" src="/tourmee/img/profile/triangle.png"/><a href="#experiences">Experiences</a></li>
+              <li style="width:34px;border-right-style:solid;border-right-width:1px;border-right-color:#8a8a8a;"><img id="triangle" src="/tourmee/img/profile/triangle.png"/><a href="#fans">Fans</a></li>
+            </ul>
+          </div>-->
+        </div>
+      </ba-card>
+    </div>
+  </div>
+
+</div>
