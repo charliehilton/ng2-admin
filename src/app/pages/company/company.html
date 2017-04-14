@@ -119,7 +119,8 @@
                     <div class="col-md-6" style="padding:0px">
                       <p style="text-align:center;font-size: 10px;margin-top:5px;margin-bottom:5px;font-family:arial;font-size:10px;color:#3c3c3c;">Add to top 100!</p>
                       <div style="width:50%; margin:auto;">
-                        <a href="#" class="sendMessage" onclick="sendMessage()"><p style="text-align: center;color: #e7e7e7;margin:0px;">Top 100</p></a>
+                        <a *ngIf="!company?.top100" class="top100" href="javascript:void(0)" (click)="addTop100(company.id)"><p style="text-align: center;color: #e7e7e7;margin:0px;">Add</p></a>
+                        <a *ngIf="company?.top100" class="top100" href="javascript:void(0)" (click)="removeTop100(company.id)"><p style="text-align: center;color: #e7e7e7;margin:0px;">Remove</p></a>
                       </div>
                       <!--TODO add code for if already part of top 100-->
                     </div>

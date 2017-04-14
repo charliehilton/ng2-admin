@@ -17,6 +17,7 @@ export class CompanyComponent implements OnInit, OnDestroy {
   id: number;
   private sub: any;
   company: Object;
+  top100: Object;
   //company: string;
   
 
@@ -39,6 +40,24 @@ constructor(private route: ActivatedRoute, private _companyService: CompanyServi
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  addTop100(id:Number) {
+    console.log("Add "+id);
+    this._companyService.addToTop100(this.id).subscribe(data => this.top100 = data,
+    error => console.error('Error: ' + error),
+      () => location.reload()
+
+    );
+    }
+
+  removeTop100(id:Number) {
+    console.log("Remove "+id);
+    this._companyService.removeFromTop100(this.id).subscribe(data => this.top100 = data,
+    error => console.error('Error: ' + error),
+      () => location.reload()
+    );
+    
   }
 
 }

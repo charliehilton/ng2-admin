@@ -16,7 +16,7 @@ export class StartupsService {
 
         let headers = new Headers({ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        return this._http.get('http://54.145.172.103:8080/plugandplay/api/v1/ventures/all',options)
+        return this._http.get('/rest/plugandplay/api/v1/ventures/all',options)
             .map(res => res.json());
     }
     //54.145.172.103
