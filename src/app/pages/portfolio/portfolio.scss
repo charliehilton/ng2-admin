@@ -1,5 +1,17 @@
 @import '../../theme/sass/conf/conf';
 
+.my-pagination {
+  cursor: pointer;
+}
+
+.ng2-pagination {
+  cursor: pointer;
+}
+
+.current {
+  cursor: pointer;
+}
+
 /*.show-grid div[class^=col-md-12]{
   padding: 10px;
   box-sizing: border-box;

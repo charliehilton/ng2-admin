@@ -26,7 +26,9 @@ const routes: Routes = [
       //{ path: 'maps', loadChildren: () => System.import('./maps/maps.module') },
       { path: 'startups',  loadChildren: () => System.import('./startups/startups.module') },
       { path: 'company',  loadChildren: () => System.import('./company/company.module') },
-      { path: 'portfolio',  loadChildren: () => System.import('./portfolio/portfolio.module') }
+      { path: 'portfolio',  loadChildren: () => System.import('./portfolio/portfolio.module') },
+      { path: 'top100lists',  loadChildren: () => System.import('./top100lists/top100lists.module') },
+      { path: 'top100',  loadChildren: () => System.import('./top100/top100.module') }
     ]
   }
 ];

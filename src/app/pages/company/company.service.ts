@@ -5,22 +5,42 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class CompanyService {
     
-    constructor (private _http: Http) {}
-  
-    /*StartupsData = this.getCompanies().toPromise();*/
+    constructor (private _http: Http) {
+      
+    }
     
     getVenture(id:Number) { 
-        let headers = new Headers({ 'Accept': 'application/json' });
+        let headers = new Headers({ 'Accept': 'application/json'});
         let options = new RequestOptions({ headers: headers });
-        return this._http.get('http://54.145.172.103:8080/plugandplay/api/v1/ventures/'+id,options)
+        return this._http.get('/rest/plugandplay/api/v1/ventures/'+id,options)
             .map(res => res.json());
     }
-    //54.145.172.103
+    
+    getTop100Lists(){ 
+        let headers = new Headers({ 'Accept': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' });
+        let options = new RequestOptions({ headers: headers });
+        return this._http.get('/rest/plugandplay/api/v1/top100/lists',options)
+            .map(res => res.json());
+    }
     /*getData(): Promise<any> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(this.StartupsData);
       }, 2000);
     });
-    }*/
+  }*/
+  
+    addToTop100(id:Number) { 
+        let header = new Headers({ 'Accept': 'application/json','Content-Type':'application/json','Access-Control-Allow-Origin': 'http://54.145.172.103,*','Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS','Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'});
+        let options = new RequestOptions({ headers: header });
+        return this._http.post('/rest/plugandplay/api/v1/ventures/addtop100',"{\"id\":"+id+"}",options)
+            .map(res => res.json());
+    }
+
+    removeFromTop100(id:Number) { 
+        let headers = new Headers({ 'Accept': 'application/json','Content-Type':'application/json','Access-Control-Allow-Origin': '*','Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS','Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'});
+        let options = new RequestOptions({ headers: headers });
+        return this._http.delete('/rest/plugandplay/api/v1/top100/delete/'+id,options)
+            .map(res => res.json());
+    }
 }

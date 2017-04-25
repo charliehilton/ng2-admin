@@ -2,6 +2,7 @@ import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
+import { Ng2PaginationModule } from 'ng2-pagination'; 
 
 import { PortfolioComponent, SearchPipe, PipeFilter, SearchArrayPipe } from './portfolio.component';
 import { PortfolioService } from './portfolio.service';
@@ -15,6 +16,7 @@ import {BusyModule} from 'angular2-busy';
     FormsModule,
     NgaModule,
     BusyModule,
+    Ng2PaginationModule,
     routing
   ],
   declarations: [

@@ -2,11 +2,10 @@ import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
-import { Ng2PaginationModule } from 'ng2-pagination'; 
 
-import { StartupsComponent, SearchPipe, PipeFilter, SearchArrayPipe } from './startups.component';
-import { StartupsService } from './startups.service';
-import { routing } from './startups.routing';
+import { Top100Component, SearchPipe, PipeFilter, SearchArrayPipe } from './top100.component';
+import { Top100Service } from './top100.service';
+import { routing } from './top100.routing';
 import {BusyModule} from 'angular2-busy';
 //import { SearchPipe } from './search.pipe'
 
@@ -16,17 +15,16 @@ import {BusyModule} from 'angular2-busy';
     FormsModule,
     NgaModule,
     BusyModule,
-    Ng2PaginationModule,
     routing
   ],
   declarations: [
-    StartupsComponent,
+    Top100Component,
     SearchPipe,
     PipeFilter,
     SearchArrayPipe
   ],
   providers: [
-    StartupsService
+    Top100Service
   ],
 
 })

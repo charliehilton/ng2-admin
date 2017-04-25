@@ -17,11 +17,13 @@ export class CompanyComponent implements OnInit, OnDestroy {
   id: number;
   private sub: any;
   company: Object;
+  top100: Object;
+  lists: any[];
   //company: string;
   
 
 constructor(private route: ActivatedRoute, private _companyService: CompanyService) {
-      this._companyService = _companyService;
+      this._companyService = _companyService;       
 }
 
  ngOnInit() {
@@ -34,11 +36,33 @@ constructor(private route: ActivatedRoute, private _companyService: CompanyServi
     error => console.error('Error: ' + error),
         () => console.log('Completed!')
     );
+    this._companyService.getTop100Lists().subscribe(data => this.lists = data,
+        error => console.error('Error: ' + error),
+        () => console.log('Completed!')
+      )
     //console.log(this.company);
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  addTop100(id:Number) {
+    console.log("Add "+id);
+    this._companyService.addToTop100(this.id).subscribe(data => this.top100 = data,
+    error => console.error('Error: ' + error),
+      () => location.reload()
+
+    );
+    }
+
+  removeTop100(id:Number) {
+    console.log("Remove "+id);
+    this._companyService.removeFromTop100(this.id).subscribe(data => this.top100 = data,
+    error => console.error('Error: ' + error),
+      () => location.reload()
+    );
+    
   }
 
 }

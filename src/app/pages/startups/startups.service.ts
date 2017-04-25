@@ -5,10 +5,8 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class StartupsService {
-    
-    constructor (private _http: Http) 
-    
-    {}
+
+    constructor (private _http: Http) {}
   
     /*StartupsData = this.getCompanies().toPromise();*/
     
@@ -16,8 +14,26 @@ export class StartupsService {
 
         let headers = new Headers({ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        return this._http.get('http://54.145.172.103:8080/plugandplay/api/v1/ventures/all',options)
+        return this._http.get('/rest/plugandplay/api/v1/ventures/all',options)
             .map(res => res.json());
+    }
+
+    getVenturesPage(page:Number, query:String){ 
+        let body : any;
+        let headers = new Headers({ 'Accept': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this._http.get('/rest/plugandplay/api/v1/ventures/query/'+page+'?query='+query,options)
+            .map(res => {
+                // If request fails, throw an Error that will be caught
+                if(res.status == 204) {
+                    console.log(res.status);
+                    return res;
+                } 
+                // If everything went fine, return the response
+                else {
+                return res.json();
+                }
+            });
     }
     //54.145.172.103
     //        BaThemePreloader.registerLoader(this.getVentures());

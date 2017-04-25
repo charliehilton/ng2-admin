@@ -1,75 +1,88 @@
-import {Component, ViewChild, ElementRef, OnInit, ViewEncapsulation, ChangeDetectionStrategy, Input} from '@angular/core';
-import {Pipe, PipeTransform} from '@angular/core'
+import {Component, ViewChild, ElementRef, OnInit, ViewEncapsulation,  OnDestroy } from '@angular/core';
+import {Pipe, PipeTransform, SimpleChanges} from '@angular/core'
 import { Observable } from 'rxjs/Rx';
+import { ActivatedRoute } from '@angular/router';
 
-import { StartupsService } from './startups.service';
+import { Top100Service } from './top100.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import {Subscription} from 'rxjs';
 //import {BaThemePreloader} from '../../theme/services';
 
 
 @Component({
-  selector: 'startups',
+  selector: 'top100',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./startups.scss'),require('./busy.scss')],
-  template: require('./startups.html'),
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [StartupsService]
+  styles: [require('./top100.scss'),require('./busy.scss')],
+  template: require('./top100.html'),
+  providers: [Top100Service]
 })
-export class StartupsComponent implements OnInit {
+export class Top100Component implements OnInit, OnDestroy  {
   @ViewChild('input')
   input: ElementRef;
-  @Input('data') companies: any[];
-  asyncCompanies: Observable<any[]>;
-  p: number = 1;
-  total: number;
-  public loading: boolean;
-  public error: boolean;
+  companies: any[];
+  lists: any[];
+  archived: any[];
   busy: Subscription;
-  searchString: String
-  
-  constructor(private _startupService: StartupsService) {
+  private sub: any;
+  top100: Object;
+  top100list: String;
+  listname: String;
 
-
-    /*this.busy = _startupService.getVenturesPage(1).subscribe(data => this.asyncCompanies = data,
+  constructor(private route: ActivatedRoute, private _top100Service: Top100Service) {
+    
+    this.busy = _top100Service.getVentures().subscribe(data => this.companies = data,
     error => console.error('Error: ' + error),
         () => console.log('Completed!')
-    )    */
-     /*BaThemePreloader.registerLoader(this._loadData(_startupService));*/
+    )
+    this.busy = _top100Service.getTop100Lists().subscribe(data => this.lists = data,
+    error => console.error('Error: ' + error),
+        () => console.log('Completed!')
+    )
+
+     this.busy = _top100Service.getTop100Archived().subscribe(data => this.archived = data,
+    error => console.error('Error: ' + error),
+        () => console.log('Completed!')
+    )
+
+    
+    /*BaThemePreloader.registerLoader(this._loadData(_startupService));*/
+
   }
 
-    ngOnInit(){
-      this.searchString = '';
-      this.getPage(1);
+  ngOnInit(){
+      this.sub = this.route.params.subscribe(params => {
+       this.listname = params['listName']; // (+) converts string 'id' to a number
+
+       // In a real app: dispatch action to load the details here.       //JSON.stringify(data)
+    });
       let eventObservable = Observable.fromEvent(this.input.nativeElement, 'keyup')
-      eventObservable.subscribe();  
-    }
+      eventObservable.subscribe();
+  }
+  
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 
-    getPage(page: number) {
-        this.loading = true;
-        this.error = false;
-        this.asyncCompanies = this._startupService.getVenturesPage(page, this.searchString)
-            .do(res => {
-                if(res.status == 204) {
-                  this.loading = false;
-                  this.error = true;
-                  console.log("Search did not return any results.")                  
-                } else {
-                    this.total = res.count;
-                    this.p = page;
-                    this.loading = false;
-                }
-                
-            })
-            .map(res => res.data);
-    }
+  removeTop100(id:Number) {
+    console.log("Remove "+id);
+    this._top100Service.removeFromTop100(id).subscribe(data => this.top100 = data,
+    error => console.error('Error: ' + error),
+      () => location.reload()
+    );
+    //location.reload();
+  }
 
-    luceneSearch(event: any){
-        this.searchString = event.target.value;
-        if(this.searchString.length > 2){
-            this.getPage(1);
-        }
+  addTop100List(listname: String){
+    if(listname.length < 2 || listname.length > 50) {
+      window.alert("Please enter a list name greater than 1 and less than 50 characters.");
+    } else {
+      console.log(listname);
+      this._top100Service.addTop100List("{\"listName\":\""+listname+"\"}").subscribe(data => this.top100list = data,
+    error => window.alert('Please enter a new Top100 List, "'+listname+'" already exists!'),
+      () => location.reload()
+    );
     }
+  }
 
 
 /*    private _loadData(_startupService):Promise<any> {
@@ -80,6 +93,20 @@ export class StartupsComponent implements OnInit {
     )
     });
   }*/
+  changePosition(position:Number, id:Number) {
+    
+    if(position > this.companies.length || position < 1){
+      window.alert("Please enter a number between 1 and "+this.companies.length);
+    } else {
+      console.log("{\"id\":"+id+",\"order\":"+position+"}");
+
+      this._top100Service.movePosition("{\"id\":"+id+",\"order\":"+position+"}").subscribe(data => this.top100 = data,
+      error => console.error('Error: ' + error),
+      () => location.reload()
+    );
+    }
+    
+}
 
 }
 

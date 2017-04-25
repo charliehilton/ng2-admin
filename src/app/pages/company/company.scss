@@ -105,7 +105,7 @@ div#circleActive {
 	//behavior: url(/tourmee/css/ie-css3.htc);
 }
 
-.sendMessage {
+.top100 {
 	-moz-box-shadow:inset 0px 1px 0px 0px #6b6b6b;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #6b6b6b;
 	box-shadow:inset 0px 1px 0px 0px #6b6b6b;
@@ -127,13 +127,14 @@ div#circleActive {
 	text-shadow:0px 2px 5px #000000;
 	//behavior: url(/tourmee/css/ie-css3.htc);
 }
-.sendMessage:hover {
+.top100:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #6b6b6b), color-stop(1, #3c3c3c) );
 	background:-moz-linear-gradient( center top, #6b6b6b 5%, #3c3c3c 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6b6b6b', endColorstr='#3c3c3c');
 	background-color:#6b6b6b;
+	color: lightgray;
 }
-.sendMessage:active {
+.top100:active {
 	position:relative;
 	top:1px;
 }
