@@ -27,10 +27,7 @@ const routes: Routes = [
       { path: 'startups',  loadChildren: () => System.import('./startups/startups.module') },
       { path: 'company',  loadChildren: () => System.import('./company/company.module') },
       { path: 'portfolio',  loadChildren: () => System.import('./portfolio/portfolio.module') },
-<<<<<<< HEAD
       { path: 'top100lists',  loadChildren: () => System.import('./top100lists/top100lists.module') },
-=======
->>>>>>> origin/master
       { path: 'top100',  loadChildren: () => System.import('./top100/top100.module') }
     ]
   }

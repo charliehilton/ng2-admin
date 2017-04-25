@@ -9,7 +9,6 @@ export class Top100Service {
     constructor (private _http: Http){}
     
     getVentures(){ 
-<<<<<<< HEAD
         let headers = new Headers({ 'Accept': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' });
         let options = new RequestOptions({ headers: headers });
         return this._http.get('/rest/plugandplay/api/v1/top100/all',options)
@@ -27,12 +26,6 @@ export class Top100Service {
         let headers = new Headers({ 'Accept': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' });
         let options = new RequestOptions({ headers: headers });
         return this._http.get('/rest/plugandplay/api/v1/top100/archived',options)
-=======
-
-        let headers = new Headers({ 'Accept': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' });
-        let options = new RequestOptions({ headers: headers });
-        return this._http.get('/rest/plugandplay/api/v1/top100/all',options)
->>>>>>> origin/master
             .map(res => res.json());
     }
 
@@ -49,7 +42,7 @@ export class Top100Service {
         return this._http.post('/rest/plugandplay/api/v1/top100/move',body,options)
             .map(res => res.json());
     }
-<<<<<<< HEAD
+
 
     addTop100List(body: String) {
         let headers = new Headers({ 'Accept': 'application/json','Content-Type':'application/json','Access-Control-Allow-Origin': '*' });
@@ -57,8 +50,7 @@ export class Top100Service {
         return this._http.post('/rest/plugandplay/api/v1/top100/newlist',body,options)
             .map(res => res.json());
     }
-=======
->>>>>>> origin/master
+
     //54.145.172.103
     //        BaThemePreloader.registerLoader(this.getVentures());
     /*getData(): Promise<any> {

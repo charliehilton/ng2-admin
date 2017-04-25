@@ -13,7 +13,6 @@ export class CompanyService {
         let headers = new Headers({ 'Accept': 'application/json'});
         let options = new RequestOptions({ headers: headers });
         return this._http.get('/rest/plugandplay/api/v1/ventures/'+id,options)
-<<<<<<< HEAD
             .map(res => res.json());
     }
     
@@ -21,8 +20,6 @@ export class CompanyService {
         let headers = new Headers({ 'Accept': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' });
         let options = new RequestOptions({ headers: headers });
         return this._http.get('/rest/plugandplay/api/v1/top100/lists',options)
-=======
->>>>>>> origin/master
             .map(res => res.json());
     }
     /*getData(): Promise<any> {
