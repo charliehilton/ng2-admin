@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 import {Component, ViewChild, ElementRef, OnInit, ViewEncapsulation,  OnDestroy } from '@angular/core';
 import {Pipe, PipeTransform, SimpleChanges} from '@angular/core'
 import { Observable } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
+=======
+import {Component, ViewChild, ElementRef, OnInit, ViewEncapsulation} from '@angular/core';
+import {Pipe, PipeTransform, SimpleChanges} from '@angular/core'
+import { Observable } from 'rxjs/Rx';
+>>>>>>> origin/master
 
 import { Top100Service } from './top100.service';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -16,6 +22,7 @@ import {Subscription} from 'rxjs';
   template: require('./top100.html'),
   providers: [Top100Service]
 })
+<<<<<<< HEAD
 export class Top100Component implements OnInit, OnDestroy  {
   @ViewChild('input')
   input: ElementRef;
@@ -29,11 +36,24 @@ export class Top100Component implements OnInit, OnDestroy  {
   listname: String;
 
   constructor(private route: ActivatedRoute, private _top100Service: Top100Service) {
+=======
+export class Top100Component implements OnInit {
+  @ViewChild('input')
+  input: ElementRef;
+  companies: any[];
+  busy: Subscription;
+  private sub: any;
+  top100: Object;
+
+  constructor(private _top100Service: Top100Service) {
+
+>>>>>>> origin/master
     
     this.busy = _top100Service.getVentures().subscribe(data => this.companies = data,
     error => console.error('Error: ' + error),
         () => console.log('Completed!')
     )
+<<<<<<< HEAD
     this.busy = _top100Service.getTop100Lists().subscribe(data => this.lists = data,
     error => console.error('Error: ' + error),
         () => console.log('Completed!')
@@ -62,6 +82,17 @@ export class Top100Component implements OnInit, OnDestroy  {
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
+=======
+    /*BaThemePreloader.registerLoader(this._loadData(_startupService));*/
+    
+    
+  }
+
+    ngOnInit(){
+      let eventObservable = Observable.fromEvent(this.input.nativeElement, 'keyup')
+      eventObservable.subscribe();
+    }
+>>>>>>> origin/master
 
   removeTop100(id:Number) {
     console.log("Remove "+id);
@@ -72,6 +103,7 @@ export class Top100Component implements OnInit, OnDestroy  {
     //location.reload();
   }
 
+<<<<<<< HEAD
   addTop100List(listname: String){
     if(listname.length < 2 || listname.length > 50) {
       window.alert("Please enter a list name greater than 1 and less than 50 characters.");
@@ -84,6 +116,8 @@ export class Top100Component implements OnInit, OnDestroy  {
     }
   }
 
+=======
+>>>>>>> origin/master
 
 /*    private _loadData(_startupService):Promise<any> {
     return new Promise((resolve, reject) => {

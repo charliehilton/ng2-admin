@@ -31,10 +31,14 @@
             <div class="col-md-2">Primary Email</div>
             
           </div>-->
+<<<<<<< HEAD
           <pagination-controls  class="my-pagination" (pageChange)="getPage($event)" id="server"></pagination-controls>  
           
           <div *ngFor="let obj of asyncCompanies | async | paginate: { id: 'server', itemsPerPage: 10, currentPage: p, totalItems: total }"> <!--| smArraySearch: input.value-->
             <div *ngIf="!loading && !error" class="col-md-12" style="padding-top:15px;padding-bottom:15px;box-sizing: border-box; border-radius: 7px;margin-bottom: 10px; background-color: rgba(255, 255, 255, 0.8);" > <!--*ngFor="let obj of companies | smArraySearch: input.value | paginate: { itemsPerPage: 10, currentPage: p }"-->
+=======
+          <div class="col-md-12" style="padding-top:15px;padding-bottom:15px;box-sizing: border-box; border-radius: 7px;margin-bottom: 10px; background-color: rgba(255, 255, 255, 0.8);" *ngFor="let obj of companies | smArraySearch: input.value | paginate: { itemsPerPage: 10, currentPage: p }">
+>>>>>>> origin/master
             <div class="col-md-1" style="padding-left:0px;"><img src="http://3.bp.blogspot.com/-FI6eeNNTcy4/VPw04yX3_qI/AAAAAAAAAFk/vEocwQMf0-8/s1600/startup-512.png" alt="Business Profile" style="width:80px;height:80px;"></div>
             <div class="col-md-5" style="padding-left:0px;">
               <a [routerLink]="['/pages/company', obj.id]">
@@ -68,6 +72,7 @@
           <div *ngIf="error" style="margin: 0 auto;width: 500px;">
             <p>Your search - {{searchString}} - did not match any documents.</p>
           </div>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
 
       <!--  <div *ngFor='#key of StartupsData'>

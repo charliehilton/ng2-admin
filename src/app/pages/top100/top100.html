@@ -31,9 +31,12 @@
             <div class="col-md-2">Primary Email</div>
             
           </div>-->
+<<<<<<< HEAD
           {{listname}}
 
 
+=======
+>>>>>>> origin/master
           <div class="col-md-12" style="padding-top:15px;padding-bottom:15px;box-sizing: border-box; border-radius: 7px;margin-bottom: 10px; background-color: rgba(255, 255, 255, 0.8);" *ngFor="let obj of companies | smArraySearch: input.value">
             <div class="col-md-1" style="padding-left:0px;"><!--<h1>{{obj?.top100.order}}</h1>-->
              <input style="background:transparent;border:none;font-size: 32px;color: inherit;" type="number" #position min="1" max="{{companies?.length}}" value="{{obj?.top100.order}}" (keyup.enter)="changePosition(position.value, obj?.id)"> <!--(focusout)="changePosition(position.value)"-->

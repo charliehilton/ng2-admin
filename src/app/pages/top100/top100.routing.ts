@@ -3,7 +3,11 @@ import { Top100Component } from './top100.component';
 
 const routes: Routes = [
   {
+<<<<<<< HEAD
     path: ':listName',
+=======
+    path: '',
+>>>>>>> origin/master
     component: Top100Component
   }
 ];

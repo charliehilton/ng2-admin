@@ -41,7 +41,11 @@ export const PAGES_MENU = [
         }
       },
       {
+<<<<<<< HEAD
         path: 'top100lists',  // path for our page
+=======
+        path: 'top100',  // path for our page
+>>>>>>> origin/master
         data: { // custom menu declaration
           menu: {
             title: 'Top 100', // menu title

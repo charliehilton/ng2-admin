@@ -18,7 +18,10 @@ export class CompanyComponent implements OnInit, OnDestroy {
   private sub: any;
   company: Object;
   top100: Object;
+<<<<<<< HEAD
   lists: any[];
+=======
+>>>>>>> origin/master
   //company: string;
   
 
