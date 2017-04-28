@@ -7,49 +7,75 @@
       <div class="input-group">
         <input #top100list type="text" class="form-control" placeholder="Create a new top100 list!">
         <span class="input-group-btn">
-            <button (click)="addTop100List(top100list.value)" style="background-color: #282828;border-color: #ffffff;"class="btn btn-danger" type="button">Add!</button>
+            <button (click)="addTop100List(top100list.value);top100list.value=''" style="background-color: #282828;border-color: #ffffff;"class="btn btn-danger" type="button">Add!</button>
         </span>
       </div>
-    <!--    <h4 class="grid-h">Mobile, tablet, desktop</h4>
-        <div class="row show-grid">
-          <div class="col-xs-12 col-sm-6 col-md-12">
-            <div>.col-xs-12 .col-sm-6 .col-md-12</div>
-          </div>  
-        </div>-->
+
         
-        <div [ngBusy]="busy" class="row show-grid">
-          <!--<div class="col-md-12 pnp-details">
-            <div class="col-md-2">Company Icon</div>
-            <div class="col-md-2">Company Name</div>
-            <div class="col-md-2">Blurb</div>            
-            <div class="col-md-2">Website</div>
-            <div class="col-md-1">Location</div>
-            <div class="col-md-1">City</div>
+        <div class="row show-grid">
 
-            <div class="col-md-1">Verticals</div>
-            <div class="col-md-1">Tags</div>
-
-            <div class="col-md-2">Account Manager: {{PNP Contact}}</div>
-            <div class="col-md-2">Primary Contact: {{Contact Name}}</div>
-            <div class="col-md-2">Primary Email</div>
-            
-          </div>-->
           <div class="col-md-12">
+          
           <div class="col-md-4" *ngFor="let list of lists" style="padding:0px;">
-            <a [routerLink]="['/pages/top100', list.listName]">
-            <div style="margin-left:5px; margin-right:5px;padding:15px;box-sizing: border-box; border-radius: 7px;margin-bottom: 10px; background-color: rgba(255, 255, 255, 0.8);">
-              <div style="font-size: 20px; color: #000000; opacity: .87; font-family: 'Arial Narrow', Arial, sans-serif; text-shadow: 1px 1px 1px #aaaaaa;">{{list.listName}}</div>
+            <div style="margin-left:5px; margin-right:5px;">
+            <div *ngIf="!loading && !error">
+            <div [ngStyle]="overlay">
+            <div style="padding-top: 10px;padding-bottom: 25px;box-sizing: border-box; border-radius: 7px;margin-bottom: 10px; background-color: rgba(255, 255, 255, 0.8);">
+               <a [routerLink]="['/pages/top100', list.listName]">
+                  <div class="col-md-10" style="font-size: 20px; color: #000000; opacity: .87; font-family: 'Arial Narrow', Arial, sans-serif; text-shadow: 1px 1px 1px #aaaaaa;">{{list.listName}}</div>
+               </a>
+               <div class="col-md-2">
+                  <i class="fa fa-archive" (click)="archiveList(list.id)" aria-hidden="true" style="cursor: pointer;display:inline-block;color:#3c3c3c;padding-left: 10px;font-size: 18px;"></i>
+               </div>
             </div>
-            </a>
+            </div>
+            </div>
+            
+            </div>
+          </div>
+          <div *ngIf="loading" style="margin: 0 auto;width: 100px;">
+            <div class="spinner"></div>
+          </div>
+          <div *ngIf="error" style="margin: 0 auto;width: 500px;">
+            <p>Could not find any Top 100 lists.</p>
           </div>
         </div>
         </div>
 
-      <!--  <div *ngFor='#key of StartupsData'>
-          <h3>{{dataObject[key].id}}</h3>
-          <p>{{dataObject[key].companyName}}</p>
-        </div>-->
+      </ba-card>
+      <ba-card baCardClass="with-scroll">
+          <div class="row show-grid">
 
+          <div class="col-md-12">
+          <div class="col-md-12" style="margin-bottom: 10px;padding-left: 5px">
+          <span style="letter-spacing:1px;font-family:arial;color:white;font-weight:bold;font-size:25px;">Archived Lists</span>
+          </div>
+          <div class="col-md-4" *ngFor="let list of archived" style="padding:0px;">
+            <div style="margin-left:5px; margin-right:5px;">
+            <div *ngIf="!loading && !errorArchived">
+            <div [ngStyle]="overlay">
+            <div style="padding-top: 10px;padding-bottom: 25px;box-sizing: border-box; border-radius: 7px;margin-bottom: 10px; background-color: rgba(255, 255, 255, 0.8);">
+               <a [routerLink]="['/pages/top100', list.listName]">
+                  <div class="col-md-10" style="font-size: 20px; color: #000000; opacity: .87; font-family: 'Arial Narrow', Arial, sans-serif; text-shadow: 1px 1px 1px #aaaaaa;">{{list.listName}}</div>
+               </a>
+               <div class="col-md-2">
+                  <i class="fa fa-arrow-up" (click)="unarchiveList(list.id)" aria-hidden="true" style="cursor: pointer;display:inline-block;color:#3c3c3c;padding-left: 10px;font-size: 18px;"></i>
+               </div>
+            </div>
+            </div>
+            </div>
+           
+            
+            </div>
+          </div>
+          <div *ngIf="loading" style="margin: 0 auto;width: 100px;">
+            <div class="spinner"></div>
+          </div>
+          <div *ngIf="errorArchived" style="margin: 0 auto;width: 500px;">
+            <p>Could not find any Top 100 archived lists.</p>
+          </div>
+        </div>
+        </div>
       </ba-card>
     </div>
   </div>

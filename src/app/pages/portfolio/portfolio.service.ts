@@ -16,8 +16,18 @@ export class PortfolioService {
 
         let headers = new Headers({ 'Accept': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        return this._http.get('/rest/plugandplay/api/v1/ventures/portfolio',options)
-            .map(res => res.json());
+        return this._http.get('/rest/plugandplay/api/v1/ventures/portfolio',options).map(res => {
+                // If request fails, throw an Error that will be caught
+                if(res.status == 204) {
+                    console.log(res.status);
+                    return res;
+                } 
+                // If everything went fine, return the response
+                else {
+                return res;
+                }
+            });
+            //.map(res => res.json());
     }
     //54.145.172.103
     //        BaThemePreloader.registerLoader(this.getVentures());

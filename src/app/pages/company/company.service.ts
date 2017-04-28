@@ -30,11 +30,10 @@ export class CompanyService {
     });
   }*/
   
-    addToTop100(id:Number) { 
+    addToTop100(id:Number,listName:String) { 
         let header = new Headers({ 'Accept': 'application/json','Content-Type':'application/json','Access-Control-Allow-Origin': 'http://54.145.172.103,*','Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS','Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'});
         let options = new RequestOptions({ headers: header });
-        return this._http.post('/rest/plugandplay/api/v1/ventures/addtop100',"{\"id\":"+id+"}",options)
-            .map(res => res.json());
+        return this._http.post('/rest/plugandplay/api/v1/ventures/addtop100',"{\"id\":"+id+",\"listName\":\""+listName+"\"}",options);
     }
 
     removeFromTop100(id:Number) { 

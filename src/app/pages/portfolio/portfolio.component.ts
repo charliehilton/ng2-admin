@@ -20,17 +20,15 @@ export class PortfolioComponent implements OnInit {
   input: ElementRef;
   companies: any[];
   busy: Subscription;
+  public error: boolean;
+  public loading: boolean;
 
   constructor(private _portfolioService: PortfolioService) {
-
-    
-    this.busy = _portfolioService.getVentures().subscribe(data => this.companies = data,
+ /*   this.busy = _portfolioService.getVentures().subscribe(data => this.companies = data,
     error => console.error('Error: ' + error),
         () => console.log('Completed!')
-    )
-    /*BaThemePreloader.registerLoader(this._loadData(_startupService));*/
-    
-    
+    )*/
+    this.getPortfolioList();
   }
 
     ngOnInit(){
@@ -38,6 +36,29 @@ export class PortfolioComponent implements OnInit {
       eventObservable.subscribe();
     }
 
+    getPortfolioList() {
+      this.loading = true;
+      this.error = false;
+      this._portfolioService.getVentures().map(res => {
+      // If request fails, throw an Error that will be caught
+      if(res.status == 204) {
+        this.loading = false;
+        this.error = true;
+        console.log("Search did not return any results.") 
+      } else if (res.status < 200 || res.status >= 300){
+        this.loading = false;
+        throw new Error('This request has failed ' + res.status);
+      }
+      // If everything went fine, return the response
+      else {
+        this.loading = false;
+        return res.json();
+      }
+    }).subscribe(data => this.companies = data,
+      err => console.error('Error: ' + err),
+          () => console.log('Completed!')
+      )
+  }
 
 /*    private _loadData(_startupService):Promise<any> {
     return new Promise((resolve, reject) => {

@@ -18,15 +18,24 @@ export class Top100ListsService {
     getTop100Lists(){ 
         let headers = new Headers({ 'Accept': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' });
         let options = new RequestOptions({ headers: headers });
-        return this._http.get('/rest/plugandplay/api/v1/top100/lists',options)
-            .map(res => res.json());
+        return this._http.get('/rest/plugandplay/api/v1/top100/lists',options).map(res => {
+                // If request fails, throw an Error that will be caught
+                if(res.status == 204) {
+                    console.log(res.status);
+                    return res;
+                } 
+                // If everything went fine, return the response
+                else {
+                return res;
+                }
+            });
+            //.map(res => res.json());
     }
 
     getTop100Archived(){ 
         let headers = new Headers({ 'Accept': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' });
         let options = new RequestOptions({ headers: headers });
-        return this._http.get('/rest/plugandplay/api/v1/top100/archived',options)
-            .map(res => res.json());
+        return this._http.get('/rest/plugandplay/api/v1/top100/archived',options);
     }
 
     removeFromTop100(id:Number) { 
@@ -36,10 +45,17 @@ export class Top100ListsService {
             .map(res => res.json());
     }
 
-    movePosition(body:String) { 
+    archiveList(body:String) { 
         let headers = new Headers({ 'Accept': 'application/json','Content-Type':'application/json','Access-Control-Allow-Origin': '*' });
         let options = new RequestOptions({ headers: headers });
-        return this._http.post('/rest/plugandplay/api/v1/top100/move',body,options)
+        return this._http.post('/rest/plugandplay/api/v1/top100/archivelist',body,options)
+            .map(res => res.json());
+    }
+
+    unarchiveList(body:String) { 
+        let headers = new Headers({ 'Accept': 'application/json','Content-Type':'application/json','Access-Control-Allow-Origin': '*' });
+        let options = new RequestOptions({ headers: headers });
+        return this._http.post('/rest/plugandplay/api/v1/top100/unarchivelist',body,options)
             .map(res => res.json());
     }
 
@@ -49,13 +65,4 @@ export class Top100ListsService {
         return this._http.post('/rest/plugandplay/api/v1/top100/newlist',body,options)
             .map(res => res.json());
     }
-    //54.145.172.103
-    //        BaThemePreloader.registerLoader(this.getVentures());
-    /*getData(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(this.StartupsData);
-      }, 2000);
-    });
-    }*/
 }

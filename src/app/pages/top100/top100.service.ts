@@ -8,31 +8,28 @@ export class Top100Service {
     
     constructor (private _http: Http){}
     
-    getVentures(){ 
+    getTop100ForList(listName:String){ 
         let headers = new Headers({ 'Accept': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' });
         let options = new RequestOptions({ headers: headers });
-        return this._http.get('/rest/plugandplay/api/v1/top100/all',options)
-            .map(res => res.json());
+        //console.log("Getting list "+listName)
+        return this._http.get('/rest/plugandplay/api/v1/top100/all?listName='+listName,options).map(res => {
+                // If request fails, throw an Error that will be caught
+                if(res.status == 204) {
+                    console.log(res.status);
+                    return res;
+                } 
+                // If everything went fine, return the response
+                else {
+                return res;
+                }
+            });
+            //.map(res => res.json());
     }
 
-    getTop100Lists(){ 
-        let headers = new Headers({ 'Accept': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' });
-        let options = new RequestOptions({ headers: headers });
-        return this._http.get('/rest/plugandplay/api/v1/top100/lists',options)
-            .map(res => res.json());
-    }
-
-    getTop100Archived(){ 
-        let headers = new Headers({ 'Accept': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' });
-        let options = new RequestOptions({ headers: headers });
-        return this._http.get('/rest/plugandplay/api/v1/top100/archived',options)
-            .map(res => res.json());
-    }
-
-    removeFromTop100(id:Number) { 
+    removeFromTop100(id:Number,listName:String) { 
         let headers = new Headers({ 'Accept': 'application/json','Content-Type':'application/json','Access-Control-Allow-Origin': '*' });
         let options = new RequestOptions({ headers: headers });
-        return this._http.delete('/rest/plugandplay/api/v1/top100/delete/'+id,options)
+        return this._http.delete('/rest/plugandplay/api/v1/top100/delete/'+id+'?listName='+listName,options)
             .map(res => res.json());
     }
 
@@ -43,13 +40,12 @@ export class Top100Service {
             .map(res => res.json());
     }
 
-
-    addTop100List(body: String) {
+    /*addTop100List(body: String) {
         let headers = new Headers({ 'Accept': 'application/json','Content-Type':'application/json','Access-Control-Allow-Origin': '*' });
         let options = new RequestOptions({ headers: headers });
         return this._http.post('/rest/plugandplay/api/v1/top100/newlist',body,options)
             .map(res => res.json());
-    }
+    }*/
 
     //54.145.172.103
     //        BaThemePreloader.registerLoader(this.getVentures());

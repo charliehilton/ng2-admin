@@ -1,6 +1,7 @@
 import {Component, ViewChild, ElementRef, OnInit, ViewEncapsulation} from '@angular/core';
 import {Pipe, PipeTransform, SimpleChanges} from '@angular/core'
 import { Observable } from 'rxjs/Rx';
+import {Router} from '@angular/router';
 
 import { Top100ListsService } from './top100lists.service';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -18,43 +19,75 @@ import {Subscription} from 'rxjs';
 export class Top100ListsComponent implements OnInit {
   @ViewChild('input')
   input: ElementRef;
-  companies: any[];
-  lists: any[];
-  archived: any[];
+  lists: any[] = [];
+  archived: any[] = [];
   busy: Subscription;
   private sub: any;
   top100: Object;
   top100list: String;
+  public error: boolean;
+  public errorArchived: boolean;
+  public loading: boolean;
+  public overlay: any;
+  router: Router;
 
   constructor(private _top100Service: Top100ListsService) {
-
-    this.busy = _top100Service.getTop100Lists().subscribe(data => this.lists = data,
-    error => console.error('Error: ' + error),
-        () => console.log('Completed!')
-    )
-
-     this.busy = _top100Service.getTop100Archived().subscribe(data => this.archived = data,
-    error => console.error('Error: ' + error),
-        () => console.log('Completed!')
-    )
-
-    
-    /*BaThemePreloader.registerLoader(this._loadData(_startupService));*/
-
+    this.archived = new Array(0);
+    this.lists  = new Array(0);
+    this.unsetOverlay();
+    this.getLists();
+    this.getArchivedLists()
   }
 
-    ngOnInit(){
-      /*let eventObservable = Observable.fromEvent(this.input.nativeElement, 'keyup')
-      eventObservable.subscribe();*/
-    }
+  ngOnInit(){
+  }
 
-  removeTop100(id:Number) {
-    console.log("Remove "+id);
-    this._top100Service.removeFromTop100(id).subscribe(data => this.top100 = data,
-    error => console.error('Error: ' + error),
-      () => location.reload()
-    );
-    //location.reload();
+  getLists() {
+      this.loading = true;
+      this.error = false;
+      this._top100Service.getTop100Lists().map(res => {
+      // If request fails, throw an Error that will be caught
+      if(res.status == 204) {
+        this.loading = false;
+        this.error = true;
+        console.log("Search did not return any results.") 
+      } else if (res.status < 200 || res.status >= 300){
+        this.loading = false;
+        throw new Error('This request has failed ' + res.status);
+      }
+      // If everything went fine, return the response
+      else {
+        this.loading = false;
+        return res.json();
+      }
+    }).subscribe(data => this.lists = data,
+      err => console.error('Error: ' + err),
+          () => console.log('Completed!')
+      )
+  }
+
+  getArchivedLists() {
+      this.loading = true;
+      this.errorArchived = false;
+      this._top100Service.getTop100Archived().map(res => {
+      // If request fails, throw an Error that will be caught
+      if(res.status == 204) {
+        this.loading = false;
+        this.errorArchived = true;
+        console.log("Search did not return any results.") 
+      } else if (res.status < 200 || res.status >= 300){
+        this.loading = false;
+        throw new Error('This request has failed ' + res.status);
+      }
+      // If everything went fine, return the response
+      else {
+        this.loading = false;
+        return res.json();
+      }
+    }).subscribe(data => this.archived = data,
+      err => console.error('Error: ' + err),
+          () => console.log('Completed!')
+      )
   }
 
   addTop100List(listname: String){
@@ -62,36 +95,77 @@ export class Top100ListsComponent implements OnInit {
       window.alert("Please enter a list name greater than 1 and less than 50 characters.");
     } else {
       console.log(listname);
-      this._top100Service.addTop100List("{\"listName\":\""+listname+"\"}").subscribe(data => this.top100list = data,
+      let item;
+      this.loading = true;
+      this._top100Service.addTop100List("{\"listName\":\""+listname+"\"}").subscribe(data => item = data,
     error => window.alert('Please enter a new Top100 List, "'+listname+'" already exists!'),
-      () => location.reload()
+      () => { 
+        this.lists.push(item);
+        this.loading = false; }
+        //location.reload(true) }//this.getLists()
+            
     );
     }
   }
 
 
-/*    private _loadData(_startupService):Promise<any> {
-    return new Promise((resolve, reject) => {
-      _startupService.getVentures().subscribe(data => this.companies = data,
-    error => console.error('Error: ' + error),
-        () => console.log('Completed!')
-    )
-    });
-  }*/
-  changePosition(position:Number, id:Number) {
-    
-    if(position > this.companies.length || position < 1){
-      window.alert("Please enter a number between 1 and "+this.companies.length);
-    } else {
-      console.log("{\"id\":"+id+",\"order\":"+position+"}");
+  archiveList(id:number) {
+    //console.log("Remove "+id);
+    this.setOverlay();
+    this._top100Service.archiveList("{\"id\":"+id+"}").subscribe(data => this.top100 = data,
+    error => {
+      this.unsetOverlay();
+      window.alert('Error: ' + error)}, 
+      () =>{
+        
+        for(var i = 0; i < this.lists.length; i++){
+          
+          if(this.lists[i].id == id){
+            if(typeof this.archived == 'undefined'){
+              this.archived = new Array(1);
+              this.archived[0] = this.lists[i];
+              this.errorArchived = false;
+            }else{
+              this.archived.push(this.lists[i])
+            }
+            this.lists.splice(i,1);
+          }
+          this.unsetOverlay();
 
-      this._top100Service.movePosition("{\"id\":"+id+",\"order\":"+position+"}").subscribe(data => this.top100 = data,
-      error => console.error('Error: ' + error),
-      () => location.reload()
+        }
+      }
     );
-    }
-    
-}
+  }
+
+  unarchiveList(id:number) {
+    //console.log("Remove "+id);
+    this.setOverlay();
+    this._top100Service.unarchiveList("{\"id\":"+id+"}").subscribe(data => this.top100 = data,
+    error => {
+      this.unsetOverlay();
+      window.alert('Error: ' + error)}, 
+      () =>{
+        
+        for(var i = 0; i < this.archived.length; i++){
+          
+          if(this.archived[i].id == id){
+            this.lists.push(this.archived[i])
+            this.archived.splice(i,1);
+          }
+          this.unsetOverlay();
+
+        }
+      }
+    );
+  }
+
+  setOverlay(){
+    this.overlay = {'background-color' : 'Black', 'opacity': '0.7', 'border-radius' : '7px'};
+  }
+
+  unsetOverlay(){
+    this.overlay = {};
+  }
 
 }
 

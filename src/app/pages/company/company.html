@@ -36,7 +36,7 @@
                 </li>
                 <li *ngIf="company?.website" style="display:block;">
                   <i class="fa fa-external-link" *ngIf="company?.website" aria-hidden="true" style="display:inline-block;color:#3c3c3c;padding-left: 12px;font-size: 16px;"></i>  
-                  <div *ngIf="company?.website" style="display:inline-block;margin-top:4px;margin-left:6px;font-family:arial;color:#343434;font-size:12px;"><a style="color: #343434" href="{{company.website}}">{{company.website}}</a></div> 
+                  <div *ngIf="company?.website" style="display:inline-block;margin-top:4px;margin-left:6px;font-family:arial;color:#343434;font-size:12px;"><a style="color: #343434" href="{{company.website}}" target="_blank">{{company.website}}</a></div> 
                 </li>
                 <li style="display:block;">
                   <i class="fa fa-globe" *ngIf="company?.city" aria-hidden="true" style="display:inline-block;color:#3c3c3c;padding-left: 12px;font-size: 16px;"></i>  
@@ -117,17 +117,22 @@
                 <div class="col-md-12" id="profileButtons" style="margin-left:0px;margin-right:0px;">
                   
                     <div class="col-md-6" style="padding:0px">
+                      <div *ngIf="!loading">
                       <p style="text-align:center;font-size: 10px;margin-top:5px;margin-bottom:5px;font-family:arial;font-size:10px;color:#3c3c3c;">Select a list, add to top 100!</p>
                       <div class="col-md-8" style="padding:0px;">
                       <div class="form-group">                         
-                          <select class="form-control" id="Top100Select">
+                          <select #top100select class="form-control" id="Top100Select">
                             <option *ngFor="let list of lists">{{list.listName}}</option>
                           </select>
                         </div>
                       </div>
                       <div class="col-md-4">                        
-                        <a class="top100" style="margin-top:5px;" href="javascript:void(0)" (click)="addTop100(company.id)"><p style="text-align: center;color: #e7e7e7;margin:0px;">Add</p></a>
+                        <a class="top100" style="margin-top:5px;" href="javascript:void(0)" (click)="addTop100(company.id,top100select.value)"><p style="text-align: center;color: #e7e7e7;margin:0px;">Add</p></a>
                         <!--<a *ngIf="company?.top100" class="top100" href="javascript:void(0)" (click)="removeTop100(company.id)"><p style="text-align: center;color: #e7e7e7;margin:0px;">Remove</p></a>-->
+                      </div>
+                      </div>
+                      <div *ngIf="loading" style="margin: 0 auto;width: 100px;">
+                        <div class="spinner"></div>
                       </div>
                     </div>
                     <div class="col-md-6" style="padding:0px;">
