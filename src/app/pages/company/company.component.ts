@@ -18,9 +18,12 @@ export class CompanyComponent implements OnInit, OnDestroy {
   private sub: any;
   company: Object;
   top100: Object;
+  top20: Object;
   lists: any[];
+  top20list: any[];
   public error: boolean;
   public loading: boolean;
+  public loading20: boolean;
   
 
 constructor(private route: ActivatedRoute, private _companyService: CompanyService) {
@@ -40,7 +43,11 @@ constructor(private route: ActivatedRoute, private _companyService: CompanyServi
     this._companyService.getTop100Lists().subscribe(data => this.lists = data,
         error => console.error('Error: ' + error),
         () => console.log('Completed!')
-      )
+    );
+    this._companyService.getTop20Lists().subscribe(data => this.top20list = data,
+        error => console.error('Error: ' + error),
+        () => console.log('Completed!')
+    );
     //console.log(this.company);
   }
 
@@ -74,6 +81,37 @@ constructor(private route: ActivatedRoute, private _companyService: CompanyServi
         
       }
     }).subscribe(data => this.top100 = data,
+      err => console.error('Error: ' + err),
+          () => console.log("Completed!")
+      );
+    }
+
+  addTop20(id:Number,listName:String) {
+    console.log("Add "+id+ " to Top20 list "+listName);
+    this.loading20 = true;
+    this.error = false;
+    this._companyService.addToTop20(this.id,listName).map(res => {
+      // If request fails, throw an Error that will be caught
+      if(res.status == 204) {
+        this.loading20 = false;
+        this.error = true;
+        window.alert("Venture already exists in "+listName);
+      } else if (res.status == 206) {
+        this.loading20 = false;
+        this.error = true;
+        window.alert("The top 20 list "+listName+" already has twenty entries.");
+      } else if (res.status < 200 || res.status >= 300){
+        this.loading20 = false;
+        throw new Error('This request has failed ' + res.status);
+      }
+      // If everything went fine, return the response
+      else {
+        this.loading20 = false;
+        window.alert("Successfully added to Top20 list "+listName);
+        return res.json();
+        
+      }
+    }).subscribe(data => this.top20 = data,
       err => console.error('Error: ' + err),
           () => console.log("Completed!")
       );

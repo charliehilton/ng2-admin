@@ -136,9 +136,26 @@
                       </div>
                     </div>
                     <div class="col-md-6" style="padding:0px;">
-                      <p id="becomeFanText" style="text-align: center;font-size: 10px ;margin-top:5px;margin-bottom:5px;font-family:arial;font-size:10px;color:#3c3c3c;">Get more insights!</p>
+                      <!--<p id="becomeFanText" style="text-align: center;font-size: 10px ;margin-top:5px;margin-bottom:5px;font-family:arial;font-size:10px;color:#3c3c3c;">Get more insights!</p>
                       <div style="width:50%; margin:auto;">
                         <a href="#" class="becomeFan" onclick="becomeFan(this)" id="$profile.getId()"><p style="text-align: center;color: #e7e7e7;">Deal Flows</p></a>
+                      </div>-->
+                      <div *ngIf="!loading20">
+                      <p style="text-align:center;font-size: 10px;margin-top:5px;margin-bottom:5px;font-family:arial;font-size:10px;color:#3c3c3c;">Select a list, add to top 20!</p>
+                      <div class="col-md-8" style="padding:0px;">
+                      <div class="form-group">                         
+                          <select #top20select class="form-control" id="Top20Select">
+                            <option *ngFor="let list of top20list">{{list.listName}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4">                        
+                        <a class="top20" style="margin-top:5px;" href="javascript:void(0)" (click)="addTop20(company.id,top20select.value)"><p style="text-align: center;color: #e7e7e7;margin:0px;">Add</p></a>
+                        <!--<a *ngIf="company?.top100" class="top100" href="javascript:void(0)" (click)="removeTop100(company.id)"><p style="text-align: center;color: #e7e7e7;margin:0px;">Remove</p></a>-->
+                      </div>
+                      </div>
+                      <div *ngIf="loading20" style="margin: 0 auto;width: 100px;">
+                        <div class="spinner"></div>
                       </div>
                     </div>
                 </div>

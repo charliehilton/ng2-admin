@@ -139,6 +139,40 @@ div#circleActive {
 	top:1px;
 }
 
+
+.top20 {
+	-moz-box-shadow:inset 0px 1px 0px 0px #6b6b6b;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #6b6b6b;
+	box-shadow:inset 0px 1px 0px 0px #6b6b6b;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3c3c3c), color-stop(1, #6b6b6b) );
+	background:-moz-linear-gradient( center top, #3c3c3c 5%, #6b6b6b 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#3c3c3c', endColorstr='#6b6b6b');
+	background-color:#3c3c3c;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #6b6b6b;
+	display:block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:16px;
+	font-weight:bold;
+	padding:6px 8px;
+	text-decoration:none;
+	text-shadow:0px 2px 5px #000000;
+	//behavior: url(/tourmee/css/ie-css3.htc);
+}
+.top20:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #6b6b6b), color-stop(1, #3c3c3c) );
+	background:-moz-linear-gradient( center top, #6b6b6b 5%, #3c3c3c 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#6b6b6b', endColorstr='#3c3c3c');
+	background-color:#6b6b6b;
+	color: lightgray;
+}
+.top20:active {
+	position:relative;
+	top:1px;
+}
 /*.show-grid div[class^=col-md-12]{
   padding: 10px;
   box-sizing: border-box;
