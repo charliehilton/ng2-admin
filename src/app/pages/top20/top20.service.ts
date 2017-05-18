@@ -12,7 +12,8 @@ export class Top20Service {
         let headers = new Headers({ 'Accept': 'application/json','Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept' });
         let options = new RequestOptions({ headers: headers });
         //console.log("Getting list "+listName)
-        return this._http.get('/rest/plugandplay/api/v1/top20/all?listName='+listName,options).map(res => {
+        let body = "{\"listName\":\""+listName+"\"}";
+        return this._http.post('/rest/plugandplay/api/v1/top20/all',body,options).map(res => {
                 // If request fails, throw an Error that will be caught
                 if(res.status == 204) {
                     console.log(res.status);
@@ -29,7 +30,8 @@ export class Top20Service {
     removeFromTop20(id:Number,listName:String) { 
         let headers = new Headers({ 'Accept': 'application/json','Content-Type':'application/json','Access-Control-Allow-Origin': '*' });
         let options = new RequestOptions({ headers: headers });
-        return this._http.delete('/rest/plugandplay/api/v1/top20/delete/'+id+'?listName='+listName,options)
+        let body = "{\"id\":"+id+",\"listName\":\""+listName+"\"}";
+        return this._http.post('/rest/plugandplay/api/v1/top20/delete/',body,options)
             .map(res => res.json());
     }
 

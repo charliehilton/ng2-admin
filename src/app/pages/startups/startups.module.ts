@@ -7,17 +7,21 @@ import { Ng2PaginationModule } from 'ng2-pagination';
 import { StartupsComponent, SearchPipe, PipeFilter, SearchArrayPipe } from './startups.component';
 import { StartupsService } from './startups.service';
 import { routing } from './startups.routing';
-import {BusyModule} from 'angular2-busy';
-//import { SearchPipe } from './search.pipe'
+
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+import { BrowserModule }  from '@angular/platform-browser';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     NgaModule,
-    BusyModule,
     Ng2PaginationModule,
-    routing
+    routing,
+    BrowserModule, 
+    ModalModule.forRoot(),
+    BootstrapModalModule
   ],
   declarations: [
     StartupsComponent,

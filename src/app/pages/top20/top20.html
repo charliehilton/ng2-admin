@@ -4,11 +4,20 @@
     <div class="col-md-12">
 
     <ba-card title="{{listname}} Top 20" baCardClass="with-scroll"> <!--<ba-card title="{{listname}}" baCardClass="with-scroll">-->
-      <div class="form-group">
-        <input #input type="text" class="form-control form-control-rounded" id="input03" placeholder="Search for...">
-      </div>
+      
         
-        <div [ngBusy]="busy" class="row show-grid">
+        <div class="row show-grid">
+          <div class="col-md-10">
+          <div class="form-group">
+            <input #input type="text" class="form-control form-control-rounded" id="input03" placeholder="Search for...">
+          </div>
+          </div>
+          <div class="col-md-2">
+                <div *ngIf="creatingpdf" class="loader">Loading...</div>
+                <div *ngIf="!creatingpdf" class="button-wrapper">
+                  <button (click)="this.creatingpdf=true;exportTop20List()" type="button" id="exportpdf" class="btn btn-default btn-raised" style="float:right;">Export to PDF</button>
+                </div>
+          </div>
           <div *ngIf="!loading && !error">
           
           <div class="col-md-12" style="padding-top:15px;padding-bottom:15px;box-sizing: border-box; border-radius: 7px;margin-bottom: 10px; background-color: rgba(255, 255, 255, 0.8);" *ngFor="let obj of companies | smArraySearch: input.value">

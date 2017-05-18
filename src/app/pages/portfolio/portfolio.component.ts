@@ -11,7 +11,7 @@ import {Subscription} from 'rxjs';
 @Component({
   selector: 'portfolio',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./portfolio.scss'),require('./busy.scss')],
+  styles: [require('./portfolio.scss')],
   template: require('./portfolio.html'),
   providers: [PortfolioService]
 })
@@ -19,7 +19,6 @@ export class PortfolioComponent implements OnInit {
   @ViewChild('input')
   input: ElementRef;
   companies: any[];
-  busy: Subscription;
   public error: boolean;
   public loading: boolean;
 

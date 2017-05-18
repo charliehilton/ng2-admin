@@ -5,13 +5,15 @@ import { Observable } from 'rxjs/Rx';
 import { StartupsService } from './startups.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import {Subscription} from 'rxjs';
-//import {BaThemePreloader} from '../../theme/services';
+
+import { Overlay } from 'angular2-modal';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 
 @Component({
   selector: 'startups',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./startups.scss'),require('./busy.scss')],
+  styles: [require('./startups.scss')],
   template: require('./startups.html'),
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [StartupsService]
@@ -70,17 +72,6 @@ export class StartupsComponent implements OnInit {
             this.getPage(1);
         }
     }
-
-
-/*    private _loadData(_startupService):Promise<any> {
-    return new Promise((resolve, reject) => {
-      _startupService.getVentures().subscribe(data => this.companies = data,
-    error => console.error('Error: ' + error),
-        () => console.log('Completed!')
-    )
-    });
-  }*/
-
 }
 
     

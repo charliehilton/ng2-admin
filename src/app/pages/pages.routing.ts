@@ -14,18 +14,12 @@ const routes: Routes = [
     path: 'pages',
     component: Pages,
     children: [
-      //{ path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: '', redirectTo: 'startups', pathMatch: 'full' },
       { path: 'dashboard', loadChildren: () => System.import('./dashboard/dashboard.module') },
-      //{ path: 'editors', loadChildren: () => System.import('./editors/editors.module') },
-      //{ path: 'components', loadChildren: () => System.import('./components/components.module') }
-      //{ path: 'charts', loadChildren: () => System.import('./charts/charts.module') },
-      //{ path: 'ui', loadChildren: () => System.import('./ui/ui.module') },
-      //{ path: 'forms', loadChildren: () => System.import('./forms/forms.module') },
-      //{ path: 'tables', loadChildren: () => System.import('./tables/tables.module') },
-      //{ path: 'maps', loadChildren: () => System.import('./maps/maps.module') },
       { path: 'startups',  loadChildren: () => System.import('./startups/startups.module') },
+      { path: 'newstartup',  loadChildren: () => System.import('./newstartup/newstartup.module') },
       { path: 'company',  loadChildren: () => System.import('./company/company.module') },
+      { path: 'editcompany',  loadChildren: () => System.import('./editcompany/editcompany.module') },
       { path: 'portfolio',  loadChildren: () => System.import('./portfolio/portfolio.module') },
       { path: 'top100lists',  loadChildren: () => System.import('./top100lists/top100lists.module') },
       { path: 'top100',  loadChildren: () => System.import('./top100/top100.module') },
@@ -36,3 +30,12 @@ const routes: Routes = [
 ];
 
 export const routing = RouterModule.forChild(routes);
+
+//{ path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+//{ path: 'editors', loadChildren: () => System.import('./editors/editors.module') },
+//{ path: 'components', loadChildren: () => System.import('./components/components.module') }
+//{ path: 'charts', loadChildren: () => System.import('./charts/charts.module') },
+//{ path: 'ui', loadChildren: () => System.import('./ui/ui.module') },
+//{ path: 'forms', loadChildren: () => System.import('./forms/forms.module') },
+//{ path: 'tables', loadChildren: () => System.import('./tables/tables.module') },
+//{ path: 'maps', loadChildren: () => System.import('./maps/maps.module') },

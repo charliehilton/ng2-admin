@@ -1,10 +1,10 @@
 import { Routes, RouterModule }  from '@angular/router';
-import { StartupsComponent } from './startups.component';
+import { EditCompanyComponent } from './editcompany.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: StartupsComponent
+    path: ':id',
+    component: EditCompanyComponent
   }
 ];
 

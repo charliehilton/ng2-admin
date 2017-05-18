@@ -1,7 +1,8 @@
-import {Component, ViewChild, ElementRef, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import {Component, ViewChild, ElementRef, OnInit, ViewEncapsulation, OnDestroy, ViewContainerRef } from '@angular/core';
 import {Pipe, PipeTransform} from '@angular/core'
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { CompanyService } from './company.service';
 //import { LocalDataSource } from 'ng2-smart-table';
@@ -9,7 +10,7 @@ import { CompanyService } from './company.service';
 @Component({
   selector: 'company',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./company.scss')],
+  styles: [require('./company.scss'), require('../css/ng2-toastr.min.scss')],
   template: require('./company.html'),
   providers: [CompanyService]
 })
@@ -26,8 +27,9 @@ export class CompanyComponent implements OnInit, OnDestroy {
   public loading20: boolean;
   
 
-constructor(private route: ActivatedRoute, private _companyService: CompanyService) {
-      this._companyService = _companyService;       
+constructor(private route: ActivatedRoute, private _companyService: CompanyService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+      this._companyService = _companyService; 
+      this.toastr.setRootViewContainerRef(vcr);       
 }
 
  ngOnInit() {
@@ -54,7 +56,15 @@ constructor(private route: ActivatedRoute, private _companyService: CompanyServi
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-
+  showSuccess(message: string, title: string, time: number) {
+        this.toastr.success(message, title,{toastLife: 2000});
+  }
+  showError(message: string, title: string, time: number) {
+        this.toastr.error(message, title,{toastLife: 2000});
+  }
+  showWarning(message: string, title: string, time: number) {
+        this.toastr.warning(message, title,{toastLife: time});
+  }
   addTop100(id:Number,listName:String) {
     console.log("Add "+id+ " to Top100 list "+listName);
     this.loading = true;
@@ -64,19 +74,20 @@ constructor(private route: ActivatedRoute, private _companyService: CompanyServi
       if(res.status == 204) {
         this.loading = false;
         this.error = true;
-        window.alert("Venture already exists in "+listName);
+        this.showWarning("Venture already exists in '"+listName+"'", "", 5000);
       } else if (res.status == 206) {
         this.loading = false;
         this.error = true;
-        window.alert("The top 100 list "+listName+" already has one hundred entries.");
+        this.showWarning("The Top 100 list '"+listName+"' already has one hundred entries.", "", 5000);
       } else if (res.status < 200 || res.status >= 300){
         this.loading = false;
+        this.showError("Could not add to Top 100, please try again.", "", 4000);
         throw new Error('This request has failed ' + res.status);
       }
       // If everything went fine, return the response
       else {
         this.loading = false;
-        window.alert("Successfully added to Top100 list "+listName);
+        this.showSuccess("Successfully added to Top 100 list '" +listName+"'", "Success!", 2000);
         return res.json();
         
       }
@@ -95,19 +106,20 @@ constructor(private route: ActivatedRoute, private _companyService: CompanyServi
       if(res.status == 204) {
         this.loading20 = false;
         this.error = true;
-        window.alert("Venture already exists in "+listName);
+        this.showWarning("Venture already exists in '"+listName+"'", "", 5000);
       } else if (res.status == 206) {
         this.loading20 = false;
         this.error = true;
-        window.alert("The top 20 list "+listName+" already has twenty entries.");
+        this.showWarning("The Top 20 list '"+listName+"' already has twenty entries.", "", 5000);
       } else if (res.status < 200 || res.status >= 300){
         this.loading20 = false;
+        this.showError("Could not add to Top 20, please try again.", "", 4000);
         throw new Error('This request has failed ' + res.status);
       }
       // If everything went fine, return the response
       else {
         this.loading20 = false;
-        window.alert("Successfully added to Top20 list "+listName);
+        this.showSuccess("Successfully added to Top 20 list '" +listName+"'", "Success!", 2000);
         return res.json();
         
       }

@@ -4,6 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts, createInputTransfer } from '@angularclass/hmr';
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import { CustomOption } from './bottom-center';
+import { ToastOptions } from 'ng2-toastr';
 
 /*// used to create fake backend
 import { fakeBackendProvider } from './_helpers/index';
@@ -53,6 +56,7 @@ type StoreType = {
     FormsModule,
     ReactiveFormsModule,
     NgaModule.forRoot(),
+    ToastModule.forRoot(),
     PagesModule,
     routing
   ],
@@ -61,7 +65,8 @@ type StoreType = {
     APP_PROVIDERS,
     AuthGuard,
     AuthenticationService,
-    UserService
+    UserService,
+    {provide: ToastOptions, useClass: CustomOption}
     // providers used to create fake backend
     /*fakeBackendProvider,
     MockBackend,

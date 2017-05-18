@@ -98,8 +98,15 @@
             </div> <!--col-md-5-->
             
             <div class="col-md-7" style="padding-left: 5px;padding-right: 10px;">
+                <div class="col-md-12" style="padding:0px;">
+                  <div *ngIf="company?.id">
+                    <a [routerLink]="['/pages/editcompany', company.id]">
+                      <div style="color: white;font-size: 10px;text-align:right;">Edit Profile</div>
+                    </a>
+                  </div>
+                </div>
                 <div class="col-md-12" *ngIf="company?.blurb" style="padding-left:5px;padding-right:5px;">
-                  <ul style="padding:0px;margin-top:10px">
+                  <ul style="padding:0px;">
                     <li style="margin-bottom:5px;display:inline-block;">
                       <p style="margin-top:0px;margin-bottom:0px;font-family:arial;color:#278cb8;font-size:17px;">Company Blurb</p>
                     </li>
@@ -202,14 +209,16 @@
                 <div *ngIf="company?.caseStudy" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.caseStudy}}</div>
                 <div *ngIf="company?.comments" style="font-size: 10px; color: #ffffff; opacity: .38;">Comments:</div>
                 <div *ngIf="company?.comments" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.comments}}</div>
-                <div *ngIf="company?.dataOfInvestment" style="font-size: 10px; color: #ffffff; opacity: .38;">Date of Investment:</div>
-                <div *ngIf="company?.dataOfInvestment" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.dataOfInvestment}}</div>
+                <div *ngIf="company?.dateOfInvestment" style="font-size: 10px; color: #ffffff; opacity: .38;">Date of Investment:</div>
+                <div *ngIf="company?.dateOfInvestment" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.dateOfInvestment}}</div>
                 <div *ngIf="company?.materials" style="font-size: 10px; color: #ffffff; opacity: .38;">Materials:</div>
                 <div *ngIf="company?.materials" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.materials}}</div>
                 <div *ngIf="company?.timestamp" style="font-size: 10px; color: #ffffff; opacity: .38;">Time Stamp:</div>
                 <div *ngIf="company?.timestamp" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.timestamp}}</div>
                 <div *ngIf="company?.id" style="font-size: 10px; color: #ffffff; opacity: .38;">Database ID:</div>
                 <div *ngIf="company?.id" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.id}}</div>
+                <div *ngIf="company?.updated" style="font-size: 10px; color: #ffffff; opacity: .38;">Last Updated:</div>
+                <div *ngIf="company?.updated" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.updated}}</div>
               </template>
             </md-tab>
             <md-tab>
