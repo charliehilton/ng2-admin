@@ -10,7 +10,6 @@ import { routing } from './startups.routing';
 
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
-import { BrowserModule }  from '@angular/platform-browser';
 
 @NgModule({
   imports: [
@@ -19,7 +18,6 @@ import { BrowserModule }  from '@angular/platform-browser';
     NgaModule,
     Ng2PaginationModule,
     routing,
-    BrowserModule, 
     ModalModule.forRoot(),
     BootstrapModalModule
   ],
