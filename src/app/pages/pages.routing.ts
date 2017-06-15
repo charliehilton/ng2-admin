@@ -24,7 +24,9 @@ const routes: Routes = [
       { path: 'top100lists',  loadChildren: () => System.import('./top100lists/top100lists.module') },
       { path: 'top100',  loadChildren: () => System.import('./top100/top100.module') },
       { path: 'top20lists',  loadChildren: () => System.import('./top20lists/top20lists.module') },
-      { path: 'top20',  loadChildren: () => System.import('./top20/top20.module') }
+      { path: 'top20',  loadChildren: () => System.import('./top20/top20.module') },
+      { path: 'batchlists',  loadChildren: () => System.import('./batchlists/batchlists.module') },
+      { path: 'batch',  loadChildren: () => System.import('./batch/batch.module') }
     ]
   }
 ];

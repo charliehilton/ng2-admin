@@ -3,7 +3,7 @@ import {Pipe, PipeTransform, SimpleChanges} from '@angular/core'
 import { Observable } from 'rxjs/Rx';
 import {Router} from '@angular/router';
 
-import { Top20ListsService } from './top20lists.service';
+import { BatchListsService } from './batchlists.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import {Subscription} from 'rxjs';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -11,27 +11,27 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 
 @Component({
-  selector: 'top20',
+  selector: 'batch',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./top20lists.scss'),require('../css/ng2-toastr.min.scss')],
-  template: require('./top20lists.html'),
-  providers: [Top20ListsService]
+  styles: [require('./batchlists.scss'),require('../css/ng2-toastr.min.scss')],
+  template: require('./batchlists.html'),
+  providers: [BatchListsService]
 })
-export class Top20ListsComponent implements OnInit {
+export class BatchListsComponent implements OnInit {
   @ViewChild('input')
   input: ElementRef;
   lists: any[] = [];
   archived: any[] = [];
   private sub: any;
-  top20: Object;
-  top20list: String;
+  batch: Object;
+  batchlist: String;
   public error: boolean;
   public errorArchived: boolean;
   public loading: boolean;
   public overlay: any;
   router: Router;
 
-  constructor(private _top20Service: Top20ListsService, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private _batchService: BatchListsService, public toastr: ToastsManager, vcr: ViewContainerRef) {
     this.archived = new Array(0);
     this.lists  = new Array(0);
     this.unsetOverlay();
@@ -56,7 +56,7 @@ export class Top20ListsComponent implements OnInit {
   getLists() {
       this.loading = true;
       this.error = false;
-      this._top20Service.getTop20Lists().map(res => {
+      this._batchService.getBatchLists().map(res => {
       // If request fails, throw an Error that will be caught
       if(res.status == 204) {
         this.loading = false;
@@ -80,7 +80,7 @@ export class Top20ListsComponent implements OnInit {
   getArchivedLists() {
       this.loading = true;
       this.errorArchived = false;
-      this._top20Service.getTop20Archived().map(res => {
+      this._batchService.getBatchArchived().map(res => {
       // If request fails, throw an Error that will be caught
       if(res.status == 204) {
         this.loading = false;
@@ -101,15 +101,15 @@ export class Top20ListsComponent implements OnInit {
       )
   }
 
-  addTop20List(listname: String){
+  addBatchList(listname: String){
     if(listname.length < 2 || listname.length > 50) {
       this.showWarning("Please enter a list name greater than 1 and less than 50 characters.", "", 4000);
     } else {
       console.log(listname);
       let item;
       this.loading = true;
-      this._top20Service.addTop20List("{\"listName\":\""+listname+"\"}").subscribe(data => item = data,
-    error => {this.loading = false; this.showWarning("Please enter a new Top 20 List, '" +listname+ "' already exists!", "", 6000);},
+      this._batchService.addBatchList("{\"listName\":\""+listname+"\"}").subscribe(data => item = data,
+    error => {this.loading = false; this.showWarning("Please enter a new Batch List, '" +listname+ "' already exists!", "", 6000);},
       () => { 
         if(typeof this.lists == 'undefined'){
           this.lists = new Array(1);
@@ -119,16 +119,18 @@ export class Top20ListsComponent implements OnInit {
         }else{
           this.lists.push(item);
           this.loading = false;
-        } 
-      }            
+        }
+      }
+            
     );
     }
   }
 
 
   archiveList(id:number) {
+    //console.log("Remove "+id);
     this.setOverlay();
-    this._top20Service.archiveList("{\"id\":"+id+"}").subscribe(data => this.top20 = data,
+    this._batchService.archiveList("{\"id\":"+id+"}").subscribe(data => this.batch = data,
     error => {
       this.unsetOverlay();
       this.showError("Could not archive list, please try again!", "Error", 4000)}, 
@@ -156,7 +158,7 @@ export class Top20ListsComponent implements OnInit {
   unarchiveList(id:number) {
     //console.log("Remove "+id);
     this.setOverlay();
-    this._top20Service.unarchiveList("{\"id\":"+id+"}").subscribe(data => this.top20 = data,
+    this._batchService.unarchiveList("{\"id\":"+id+"}").subscribe(data => this.batch = data,
     error => {
       this.unsetOverlay();
       this.showError("Could not unarchive list, please try again!", "Error", 4000)},

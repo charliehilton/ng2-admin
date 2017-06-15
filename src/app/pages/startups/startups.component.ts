@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, OnInit, ViewEncapsulation, ChangeDetectionStrategy, Input} from '@angular/core';
+import {Component, ViewChild, ElementRef, OnInit, ViewEncapsulation, ChangeDetectionStrategy, Input, ViewContainerRef} from '@angular/core';
 import {Pipe, PipeTransform} from '@angular/core'
 import { Observable } from 'rxjs/Rx';
 
@@ -6,14 +6,19 @@ import { StartupsService } from './startups.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import {Subscription} from 'rxjs';
 
-import { Overlay } from 'angular2-modal';
-import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { ModalComponent } from './custom.modal';
+import { DialogService } from "ng2-bootstrap-modal";
 
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
+interface TopLists {
+    listName ? : String; // the "?" makes the property optional, 
+    id ? : Number; //  so you can start with an empty object
+}
 @Component({
   selector: 'startups',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./startups.scss')],
+  styles: [require('./startups.scss'),require('../css/ng2-toastr.min.scss')],
   template: require('./startups.html'),
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [StartupsService]
@@ -29,24 +34,181 @@ export class StartupsComponent implements OnInit {
   public error: boolean;
   busy: Subscription;
   searchString: String
+  top20lists: any[] = [];
+  top100lists: any[] = [];
+  top20Exclude: TopLists[] = [];
+  top100Exclude: TopLists[] = [];
+  top100: Object;
+  top20: Object;
   
-  constructor(private _startupService: StartupsService) {
-
-
-    /*this.busy = _startupService.getVenturesPage(1).subscribe(data => this.asyncCompanies = data,
-    error => console.error('Error: ' + error),
-        () => console.log('Completed!')
-    )    */
-     /*BaThemePreloader.registerLoader(this._loadData(_startupService));*/
+  constructor(private _startupService: StartupsService, private dialogService:DialogService, public toastr: ToastsManager, vcr: ViewContainerRef){
+    this.getTop20Lists();
+    this.getTop100Lists();
+    this.toastr.setRootViewContainerRef(vcr); 
   }
 
-    ngOnInit(){
+  ngOnInit(){
       this.searchString = '';
       this.getPage(1);
       let eventObservable = Observable.fromEvent(this.input.nativeElement, 'keyup')
       eventObservable.subscribe();  
+  }
+  showSuccess(message: string, title: string, time: number) {
+        this.toastr.success(message, title,{toastLife: 2000});
+  }
+  showError(message: string, title: string, time: number) {
+        this.toastr.error(message, title,{toastLife: 2000});
+  }
+  showWarning(message: string, title: string, time: number) {
+        this.toastr.warning(message, title,{toastLife: time});
+  }
+  addTop100(id:Number,listName:String) {
+    console.log("Add "+id+ " to Top100 list "+listName);
+    this.loading = true;
+    this.error = false;
+    this._startupService.addToTop100(id,listName).map(res => {
+      // If request fails, throw an Error that will be caught
+      if(res.status == 204) {
+        this.loading = false;
+        this.error = true;
+        this.showWarning("Venture already exists in '"+listName+"'", "", 5000);
+      } else if (res.status == 206) {
+        this.loading = false;
+        this.error = true;
+        this.showWarning("The Top 100 list '"+listName+"' already has two hundred entries.", "", 5000);
+      } else if (res.status < 200 || res.status >= 300){
+        this.loading = false;
+        this.showError("Could not add to Top 100, please try again.", "", 4000);
+        throw new Error('This request has failed ' + res.status);
+      }
+      // If everything went fine, return the response
+      else {
+        this.loading = false;
+        this.showSuccess("Successfully added to Top 100 list '" +listName+"'", "Success!", 2000);
+        var obj:TopLists = {};
+        obj.listName = listName;
+        obj.id = id;
+        this.top100Exclude.push(obj);
+        return res.json();
+        
+      }
+    }).subscribe(data => this.top100 = data,
+      err => console.error('Error: ' + err),
+          () => console.log("Completed!")
+      );
     }
 
+  addTop20(id:Number,listName:String) {
+    console.log("Add "+id+ " to Top20 list "+listName);
+    this.loading = true;
+    //this.error = false;
+    this._startupService.addToTop20(id,listName).map(res => {
+      // If request fails, throw an Error that will be caught
+      if(res.status == 204) {
+        this.loading = false;
+        //this.error = true;
+        this.showWarning("Venture already exists in '"+listName+"'", "", 5000);
+      } else if (res.status == 206) {
+        this.loading = false;
+        //this.error = true;
+        this.showWarning("The Top 20 list '"+listName+"' already has twenty entries.", "", 5000);
+      } else if (res.status < 200 || res.status >= 300){
+        this.loading = false;
+        this.showError("Could not add to Top 20, please try again.", "", 4000);
+        throw new Error('This request has failed ' + res.status);
+      }
+      // If everything went fine, return the response
+      else {
+        this.loading = false;
+        this.showSuccess("Successfully added to Top 20 list '" +listName+"'", "Success!", 2000);
+        var obj:TopLists = {};
+        obj.listName = listName;
+        obj.id = id;
+        this.top20Exclude.push(obj);
+        return res.json();
+        
+      }
+    }).subscribe(data => this.top20 = data,
+      err => console.error('Error: ' + err),
+          () => console.log("Completed!")
+      );
+    }
+    top20Modal(company: any) {
+            var tmplist : any[] = [];
+            for(var i = 0; i < this.top20lists.length; i++){
+               tmplist[i] = this.top20lists[i];
+            }        
+
+            for(var i = 0; i < tmplist.length; i++){ 
+                for(var j = 0; j < company.top20.length; j ++)
+                if(tmplist[i].listName == company.top20[j].listName){
+                    tmplist.splice(i, 1);
+                }            
+            }
+            console.log("Exclude: "+JSON.stringify(this.top20Exclude));
+            for(var i = 0; i < this.top20Exclude.length; i++){
+                if(this.top20Exclude[i].id == company.id){
+                    for(var j = 0; j < tmplist.length; j++){
+                        if(tmplist[j].listName == this.top20Exclude[i].listName){
+                             tmplist.splice(j, 1);
+                        }
+                    }
+                }
+            }
+                        
+            let disposable = this.dialogService.addDialog(ModalComponent, {
+                lists: tmplist,
+                company: company,
+                title: "Top 20"
+                })
+                .subscribe( isConfirmed =>{
+                    if(isConfirmed){
+                     for(var i = 0; i < isConfirmed.length; i++){
+                        if(isConfirmed[i].checked == true){
+                            this.addTop20(company.id,isConfirmed[i].listName);                    
+                        }
+                    }
+                    }
+                });
+    }
+    top100Modal(company: any) {
+            var tmplist : any[] = [];
+            for(var i = 0; i < this.top100lists.length; i++){
+               tmplist[i] = this.top100lists[i];
+            }        
+
+            for(var i = 0; i < tmplist.length; i++){ 
+                for(var j = 0; j < company.top100.length; j ++)
+                if(tmplist[i].listName == company.top100[j].listName){
+                    tmplist.splice(i, 1);
+                }            
+            }
+            console.log("Exclude: "+JSON.stringify(this.top100Exclude));
+            for(var i = 0; i < this.top100Exclude.length; i++){
+                if(this.top100Exclude[i].id == company.id){
+                    for(var j = 0; j < tmplist.length; j++){
+                        if(tmplist[j].listName == this.top100Exclude[i].listName){
+                             tmplist.splice(j, 1);
+                        }
+                    }
+                }
+            }
+                        
+            let disposable = this.dialogService.addDialog(ModalComponent, {
+                lists: tmplist,
+                company: company,
+                title: "Top 100"
+                })
+                .subscribe( isConfirmed =>{
+                    if(isConfirmed){
+                     for(var i = 0; i < isConfirmed.length; i++){
+                        if(isConfirmed[i].checked == true){
+                            this.addTop100(company.id,isConfirmed[i].listName);                    
+                        }
+                    }
+                    }
+                });
+    }
     getPage(page: number) {
         this.loading = true;
         this.error = false;
@@ -72,6 +234,53 @@ export class StartupsComponent implements OnInit {
             this.getPage(1);
         }
     }
+
+    getTop20Lists() {
+      this.loading = true;
+      this.error = false;
+      this._startupService.getTop20Lists().map(res => {
+      // If request fails, throw an Error that will be caught
+      if(res.status == 204) {
+        this.loading = false;
+        this.error = true;
+        console.log("Search did not return any results.") 
+      } else if (res.status < 200 || res.status >= 300){
+        this.loading = false;
+        throw new Error('This request has failed ' + res.status);
+      }
+      // If everything went fine, return the response
+      else {
+        this.loading = false;
+        return res.json();
+      }
+    }).subscribe(data => this.top20lists = data,
+      err => console.error('Error: ' + err),
+          () => console.log('Completed!')
+      )
+  }
+  getTop100Lists() {
+      this.loading = true;
+      this.error = false;
+      this._startupService.getTop100Lists().map(res => {
+      // If request fails, throw an Error that will be caught
+      if(res.status == 204) {
+        this.loading = false;
+        this.error = true;
+        console.log("Search did not return any results.") 
+      } else if (res.status < 200 || res.status >= 300){
+        this.loading = false;
+        throw new Error('This request has failed ' + res.status);
+      }
+      // If everything went fine, return the response
+      else {
+        this.loading = false;
+        return res.json();
+      }
+    }).subscribe(data => this.top100lists = data,
+      err => console.error('Error: ' + err),
+          () => console.log('Completed!')
+      )
+  }
 }
 
     

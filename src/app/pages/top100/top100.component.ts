@@ -9,11 +9,10 @@ import {Subscription} from 'rxjs';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import * as FileSaver from "file-saver";
 
-
-//declare var pdfMake: any;
-//import {BaThemePreloader} from '../../theme/services';
-
+import { ModalComponent } from './export.modal';
+import { DialogService } from "ng2-bootstrap-modal";
 
 @Component({
   selector: 'top100',
@@ -34,11 +33,12 @@ export class Top100Component implements OnInit, OnDestroy  {
   listname: String;
   public error: boolean;
   public creatingpdf: boolean;
+  public creatingcsv: boolean;
   public loading: boolean;
   public overlay: any;
   public overlaypdf: any;
 
-  constructor(private route: ActivatedRoute, private _top100Service: Top100Service, public toastr: ToastsManager, vcr: ViewContainerRef) {
+  constructor(private route: ActivatedRoute, private _top100Service: Top100Service, public toastr: ToastsManager, vcr: ViewContainerRef, private dialogService:DialogService) {
       this.unsetOverlay();
       pdfMake.vfs = pdfFonts.pdfMake.vfs;
       this.creatingpdf = false;
@@ -67,6 +67,54 @@ export class Top100Component implements OnInit, OnDestroy  {
   showWarning(message: string, title: string, time: number) {
         this.toastr.warning(message, title,{toastLife: time});
   }
+/*  exportToCSV(){
+    var json2csv = require('json2csv');
+    var fields = ['companyName', 'blurb', 'verticals', 'website', 'pnpContact', 'contactName', 'email', 'phoneNumber', 'totalMoneyRaised', 'stage', 'b2bb2c', 'employees', 'location', 'city', 'competition', 'advantage', 'background', 'founded', 'partnerInterests', 'caseStudy', 'comments', 'tags', 'materials', 'dateOfInvestment','timestamp'];
+
+    try {
+      var result = json2csv({ data: this.companies, fields: fields });
+      //console.log(result);
+      var blob = new Blob([result], { type: 'text/csv' });
+      FileSaver.saveAs(blob, this.listname+'-Top100.csv');
+      this.creatingcsv = false;
+    } catch (err) {
+      // Errors are thrown for bad options, or if the data is empty and no fields are provided.
+      // Be sure to provide fields if it is possible that your data array will be empty.
+      console.error(err);
+      this.creatingcsv = false;
+    }
+  }*/
+  exportToCSV() {
+      var fields = ['companyName', 'blurb', 'verticals', 'website', 'pnpContact', 'contactName', 'email', 'phoneNumber', 'totalMoneyRaised', 'stage', 'b2bb2c', 'employees', 'location', 'city', 'competition', 'advantage', 'background', 'founded', 'partnerInterests', 'caseStudy', 'comments', 'tags', 'materials', 'dateOfInvestment','timestamp'];
+      let disposable = this.dialogService.addDialog(ModalComponent, {
+          lists: fields
+          })
+          .subscribe( isConfirmed =>{
+              if(isConfirmed){
+                var exportList = new Array();
+                for(var i = 0; i < isConfirmed.length; i++){
+                  if(isConfirmed[i].checked == true){
+                      exportList.push(isConfirmed[i].listName)                   
+                  }
+                }
+              
+              var json2csv = require('json2csv');
+              try {
+                var result = json2csv({ data: this.companies, fields: exportList });
+                //console.log(result);
+                var blob = new Blob([result], { type: 'text/csv' });
+                FileSaver.saveAs(blob, this.listname+'-Top100.csv');
+                this.creatingcsv = false;
+              } catch (err) {
+                // Errors are thrown for bad options, or if the data is empty and no fields are provided.
+                // Be sure to provide fields if it is possible that your data array will be empty.
+                console.error(err);
+                this.creatingcsv = false;
+              }
+              }
+          });
+            
+    }
   exportTop100List() {
       this.creatingpdf = true;
       //this.setPDFOverlay();

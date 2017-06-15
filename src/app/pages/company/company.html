@@ -212,7 +212,7 @@
                 <div *ngIf="company?.dateOfInvestment" style="font-size: 10px; color: #ffffff; opacity: .38;">Date of Investment:</div>
                 <div *ngIf="company?.dateOfInvestment" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.dateOfInvestment}}</div>
                 <div *ngIf="company?.materials" style="font-size: 10px; color: #ffffff; opacity: .38;">Materials:</div>
-                <div *ngIf="company?.materials" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.materials}}</div>
+                <div *ngIf="company?.materials" style="font-size: 12px; color: #ffffff; opacity: .54;"><a style="color: #ffffff" href="{{company.materials}}" target="_blank">{{company.materials}}</a></div>
                 <div *ngIf="company?.timestamp" style="font-size: 10px; color: #ffffff; opacity: .38;">Time Stamp:</div>
                 <div *ngIf="company?.timestamp" style="font-size: 12px; color: #ffffff; opacity: .54;">{{company.timestamp}}</div>
                 <div *ngIf="company?.id" style="font-size: 10px; color: #ffffff; opacity: .38;">Database ID:</div>

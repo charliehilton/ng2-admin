@@ -7,7 +7,7 @@
       
         
         <div class="row show-grid">
-          <div class="col-md-10">
+          <div class="col-md-8">
           <div class="form-group">
             <input #input type="text" class="form-control form-control-rounded" id="input03" placeholder="Search for...">
           </div>
@@ -16,6 +16,12 @@
                 <div *ngIf="creatingpdf" class="loader">Loading...</div>
                 <div *ngIf="!creatingpdf" class="button-wrapper">
                   <button (click)="this.creatingpdf=true;exportTop20List()" type="button" id="exportpdf" class="btn btn-default btn-raised" style="float:right;">Export to PDF</button>
+                </div>
+          </div>
+          <div class="col-md-2">
+                <div *ngIf="creatingcsv" class="loader">Loading...</div>
+                <div *ngIf="!creatingcsv" class="button-wrapper">
+                  <button (click)="this.creatingcsv=true;exportToCSV()" type="button" id="exportcsv" class="btn btn-default btn-raised" style="float:right;">Export to CSV</button>
                 </div>
           </div>
           <div *ngIf="!loading && !error">

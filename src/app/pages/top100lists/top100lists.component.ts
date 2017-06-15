@@ -107,11 +107,18 @@ export class Top100ListsComponent implements OnInit {
       let item;
       this.loading = true;
       this._top100Service.addTop100List("{\"listName\":\""+listname+"\"}").subscribe(data => item = data,
-    error => {this.loading = false; this.showWarning("Please enter a new Top100 List, '" +listname+ "' already exists!", "", 6000);},
+    error => {this.loading = false; this.showWarning("Please enter a new Top 100 List, '" +listname+ "' already exists!", "", 6000);},
       () => { 
-        this.lists.push(item);
-        this.loading = false; }
-            
+        if(typeof this.lists == 'undefined'){
+          this.lists = new Array(1);
+          this.lists[0] = item;
+          this.error = false;
+          this.loading = false;
+        }else{
+          this.lists.push(item);
+          this.loading = false;
+        } 
+      }      
     );
     }
   }

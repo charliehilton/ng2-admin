@@ -7,7 +7,9 @@ import { Top100Component, SearchPipe, PipeFilter, SearchArrayPipe } from './top1
 import { Top100Service } from './top100.service';
 import { routing } from './top100.routing';
 import {BusyModule} from 'angular2-busy';
-//import { SearchPipe } from './search.pipe'
+
+import { BootstrapModalModule } from 'ng2-bootstrap-modal';
+import { ModalComponent } from './export.modal';
 
 @NgModule({
   imports: [
@@ -15,13 +17,18 @@ import {BusyModule} from 'angular2-busy';
     FormsModule,
     NgaModule,
     BusyModule,
-    routing
+    routing,
+    BootstrapModalModule
+  ],
+  entryComponents: [
+    ModalComponent
   ],
   declarations: [
     Top100Component,
     SearchPipe,
     PipeFilter,
-    SearchArrayPipe
+    SearchArrayPipe,
+    ModalComponent
   ],
   providers: [
     Top100Service

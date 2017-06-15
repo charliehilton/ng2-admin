@@ -78,7 +78,7 @@ constructor(private route: ActivatedRoute, private _companyService: CompanyServi
       } else if (res.status == 206) {
         this.loading = false;
         this.error = true;
-        this.showWarning("The Top 100 list '"+listName+"' already has one hundred entries.", "", 5000);
+        this.showWarning("The Top 100 list '"+listName+"' already has two hundred entries.", "", 5000);
       } else if (res.status < 200 || res.status >= 300){
         this.loading = false;
         this.showError("Could not add to Top 100, please try again.", "", 4000);

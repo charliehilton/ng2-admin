@@ -3,7 +3,7 @@ import {Pipe, PipeTransform, SimpleChanges} from '@angular/core'
 import { Observable } from 'rxjs/Rx';
 import { ActivatedRoute } from '@angular/router';
 
-import { Top20Service } from './top20.service';
+import { BatchService } from './batch.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import {Subscription} from 'rxjs';
 import * as pdfMake from 'pdfmake/build/pdfmake';
@@ -16,21 +16,21 @@ import { DialogService } from "ng2-bootstrap-modal";
 
 
 @Component({
-  selector: 'top20',
+  selector: 'batch',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./top20.scss'),require('../css/ng2-toastr.min.scss')],
-  template: require('./top20.html'),
-  providers: [Top20Service]
+  styles: [require('./batch.scss'),require('../css/ng2-toastr.min.scss')],
+  template: require('./batch.html'),
+  providers: [BatchService]
 })
 
-export class Top20Component implements OnInit, OnDestroy  {
+export class BatchComponent implements OnInit, OnDestroy  {
   @ViewChild('input')
   input: ElementRef;
   companies: any[];
   archived: any[];
   private sub: any;
-  top20: Object;
-  top20list: String;
+  batch: Object;
+  batchlist: String;
   listname: String;
   public creatingpdf: boolean;
   public creatingcsv: boolean;
@@ -38,7 +38,7 @@ export class Top20Component implements OnInit, OnDestroy  {
   public loading: boolean;
   public overlay: any;
 
-  constructor(private route: ActivatedRoute,  private _top20Service: Top20Service, public toastr: ToastsManager, vcr: ViewContainerRef, private dialogService:DialogService) {
+  constructor(private route: ActivatedRoute,  private _batchService: BatchService, public toastr: ToastsManager, vcr: ViewContainerRef, private dialogService:DialogService) {
       this.unsetOverlay();
       pdfMake.vfs = pdfFonts.pdfMake.vfs;
       this.creatingpdf = false;
@@ -75,7 +75,7 @@ export class Top20Component implements OnInit, OnDestroy  {
       var result = json2csv({ data: this.companies, fields: fields });
       //console.log(result);
       var blob = new Blob([result], { type: 'text/csv' });
-      FileSaver.saveAs(blob, this.listname+'-Top20.csv');
+      FileSaver.saveAs(blob, this.listname+'-Batch.csv');
       this.creatingcsv = false;
     } catch (err) {
       // Errors are thrown for bad options, or if the data is empty and no fields are provided.
@@ -103,7 +103,7 @@ export class Top20Component implements OnInit, OnDestroy  {
                       var result = json2csv({ data: this.companies, fields: exportList });
                       //console.log(result);
                       var blob = new Blob([result], { type: 'text/csv' });
-                      FileSaver.saveAs(blob, this.listname+'-Top20.csv');
+                      FileSaver.saveAs(blob, this.listname+'-Batch.csv');
                       this.creatingcsv = false;
                     } catch (err) {
                       // Errors are thrown for bad options, or if the data is empty and no fields are provided.
@@ -118,7 +118,7 @@ export class Top20Component implements OnInit, OnDestroy  {
   getLists() {
       this.loading = true;
       this.error = false;
-      this._top20Service.getTop20ForList(this.listname).map(res => {
+      this._batchService.getBatchForList(this.listname).map(res => {
       // If request fails, throw an Error that will be caught
       if(res.status == 204) {
         this.loading = false;
@@ -147,10 +147,10 @@ export class Top20Component implements OnInit, OnDestroy  {
   }
   
 
-  removeTop20(id:Number) {
+  removeBatch(id:Number) {
     this.setOverlay();
     //console.log("Remove "+id);
-    this._top20Service.removeFromTop20(id,this.listname).subscribe(data => this.top20 = data,
+    this._batchService.removeFromBatch(id,this.listname).subscribe(data => this.batch = data,
     error => {
       this.unsetOverlay();
       this.showError("Could not remove Top 20, please try again!", "Error", 4000)}, 
@@ -164,11 +164,11 @@ export class Top20Component implements OnInit, OnDestroy  {
             trigger = true;
           }
           if(trigger == true){
-            for(var j = 0; j < this.companies[i].top20.length; j++){
-              /*console.log(this.companies[i].top20[j].listName) 
-              console.log(this.companies[i].top20[j].order)*/ 
-              if(this.companies[i].top20[j].listName == this.listname){
-                  this.companies[i].top20[j].order = this.companies[i].top20[j].order - 1;
+            for(var j = 0; j < this.companies[i].batch.length; j++){
+              /*console.log(this.companies[i].batch[j].listName) 
+              console.log(this.companies[i].batch[j].order)*/ 
+              if(this.companies[i].batch[j].listName == this.listname){
+                  this.companies[i].batch[j].order = this.companies[i].batch[j].order - 1;
               }        
             }
             
@@ -187,29 +187,29 @@ export class Top20Component implements OnInit, OnDestroy  {
       /*console.log("{\"id\":"+id+",\"order\":"+position+"}");
       console.log("current: "+current)*/
       this.setOverlay();
-      this._top20Service.movePosition("{\"id\":"+id+",\"order\":"+position+",\"listName\":\""+this.listname+"\"}").subscribe(data => this.top20 = data,
+      this._batchService.movePosition("{\"id\":"+id+",\"order\":"+position+",\"listName\":\""+this.listname+"\"}").subscribe(data => this.batch = data,
       error => {
       this.unsetOverlay();
       this.showError("Could change position, please try again!", "Error", 4000)}, 
       () => {
         for(var i = current; i < this.companies.length; i++ ){
-        for(var j = 0; j < this.companies[i].top20.length; j++){
+        for(var j = 0; j < this.companies[i].batch.length; j++){
 
-              if(this.companies[i].top20[j].listName == this.listname){
-                  this.companies[i].top20[j].order = this.companies[i].top20[j].order - 1;
+              if(this.companies[i].batch[j].listName == this.listname){
+                  this.companies[i].batch[j].order = this.companies[i].batch[j].order - 1;
               }        
             }
       }
-      for(var j = 0; j < this.companies[current - 1].top20.length; j++){
-         if(this.companies[current - 1].top20[j].listName == this.listname){
-           this.companies[current -1 ].top20[j].order = position;
+      for(var j = 0; j < this.companies[current - 1].batch.length; j++){
+         if(this.companies[current - 1].batch[j].listName == this.listname){
+           this.companies[current -1 ].batch[j].order = position;
          }
       }
       this.companies = this.moveItem(this.companies, current - 1, position-1);
       for(var i = position; i < this.companies.length; i++){
-        for(var j = 0; j < this.companies[i].top20.length; j++){
-          if(this.companies[i].top20[j].listName == this.listname){
-                  this.companies[i].top20[j].order = this.companies[i].top20[j].order + 1;
+        for(var j = 0; j < this.companies[i].batch.length; j++){
+          if(this.companies[i].batch[j].listName == this.listname){
+                  this.companies[i].batch[j].order = this.companies[i].batch[j].order + 1;
                   
           }  
         
@@ -217,8 +217,8 @@ export class Top20Component implements OnInit, OnDestroy  {
       }
       
       for(var i = 0; i < this.companies.length; i ++) {
-         for(var j = 0; j < this.companies[i].top20.length; j++){
-           console.log(this.companies[i].top20[j].venture_id + " " + this.companies[i].top20[j].order)
+         for(var j = 0; j < this.companies[i].batch.length; j++){
+           console.log(this.companies[i].batch[j].venture_id + " " + this.companies[i].batch[j].order)
          }
       }
       this.unsetOverlay();
@@ -246,7 +246,7 @@ export class Top20Component implements OnInit, OnDestroy  {
     return arr;
   }
   
-    exportTop20List() {
+    exportBatchList() {
       this.creatingpdf = true;
       //this.setPDFOverlay();
       type MyArrayType = Array<{text: string, link: string, style: string}>;
@@ -316,7 +316,7 @@ export class Top20Component implements OnInit, OnDestroy  {
             circles: "data:image/png;base64,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"
           }
         };
-        pdfMake.createPdf(docDefinition).download(this.listname+'-Top20.pdf');
+        pdfMake.createPdf(docDefinition).download(this.listname+'-Batch.pdf');
         this.creatingpdf = false;
   }
 

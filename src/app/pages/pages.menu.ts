@@ -65,6 +65,19 @@ export const PAGES_MENU = [
             order: 0
           }
         }
+      },
+      {
+        path: 'batchlists',  // path for our page
+        data: { // custom menu declaration
+          menu: {
+            title: 'Batch', // menu title
+            icon: 'fa fa-stack-overflow', // menu icon
+            pathMatch: 'prefix', // use it if item children not displayed in menu
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        }
       }
       //,
      /* {
