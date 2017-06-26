@@ -42,9 +42,17 @@ export class ModalComponent extends DialogComponent<CustomModal, CheckForm[]> im
   ngOnInit(){
      for(var i = 0; i < this.lists.length; i++){
       var obj:CheckForm = {};
-      obj.listName = this.lists[i];
-      obj.checked = true;
-      this.formArray.push(obj);
+      if(this.lists[i] == 'companyName' || this.lists[i] == 'blurb' || this.lists[i] == 'website' || this.lists[i] == 'stage' 
+      || this.lists[i] == 'location' || this.lists[i] == 'background' || this.lists[i] == 'verticals' || this.lists[i] == 'competition' 
+      || this.lists[i] == 'advantage' || this.lists[i] == 'caseStudy' || this.lists[i] == 'comments'){
+        obj.listName = this.lists[i];
+        obj.checked = true;
+        this.formArray.push(obj);
+      }else{
+        obj.listName = this.lists[i];
+        obj.checked = false;
+        this.formArray.push(obj);
+      }
     }
   }
   confirm() {

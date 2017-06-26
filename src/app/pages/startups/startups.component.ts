@@ -36,14 +36,19 @@ export class StartupsComponent implements OnInit {
   searchString: String
   top20lists: any[] = [];
   top100lists: any[] = [];
+  batchlists: any[] = [];
   top20Exclude: TopLists[] = [];
   top100Exclude: TopLists[] = [];
+  batchExclude: TopLists[] = [];
   top100: Object;
   top20: Object;
+  batch: Object;
+
   
   constructor(private _startupService: StartupsService, private dialogService:DialogService, public toastr: ToastsManager, vcr: ViewContainerRef){
     this.getTop20Lists();
     this.getTop100Lists();
+    this.getBatchLists();
     this.toastr.setRootViewContainerRef(vcr); 
   }
 
@@ -133,6 +138,41 @@ export class StartupsComponent implements OnInit {
           () => console.log("Completed!")
       );
     }
+    addBatch(id:Number,listName:String) {
+    console.log("Add "+id+ " to Top20 list "+listName);
+    this.loading = true;
+    //this.error = false;
+    this._startupService.addToBatch(id,listName).map(res => {
+      // If request fails, throw an Error that will be caught
+      if(res.status == 204) {
+        this.loading = false;
+        //this.error = true;
+        this.showWarning("Venture already exists in '"+listName+"'", "", 5000);
+      } else if (res.status == 206) {
+        this.loading = false;
+        //this.error = true;
+        this.showWarning("The Batch list '"+listName+"' already has one hundred entries.", "", 5000);
+      } else if (res.status < 200 || res.status >= 300){
+        this.loading = false;
+        this.showError("Could not add to Batch, please try again.", "", 4000);
+        throw new Error('This request has failed ' + res.status);
+      }
+      // If everything went fine, return the response
+      else {
+        this.loading = false;
+        this.showSuccess("Successfully added to Batch list '" +listName+"'", "Success!", 2000);
+        var obj:TopLists = {};
+        obj.listName = listName;
+        obj.id = id;
+        this.batchExclude.push(obj);
+        return res.json();
+        
+      }
+    }).subscribe(data => this.batch = data,
+      err => console.error('Error: ' + err),
+          () => console.log("Completed!")
+      );
+    }
     top20Modal(company: any) {
             var tmplist : any[] = [];
             for(var i = 0; i < this.top20lists.length; i++){
@@ -209,6 +249,44 @@ export class StartupsComponent implements OnInit {
                     }
                 });
     }
+    batchModal(company: any) {
+            var tmplist : any[] = [];
+            for(var i = 0; i < this.batchlists.length; i++){
+               tmplist[i] = this.batchlists[i];
+            }        
+            console.log("Company: "+JSON.stringify(company));
+
+            for(var i = 0; i < tmplist.length; i++){ 
+                for(var j = 0; j < company.batch.length; j ++)
+                if(tmplist[i].listName == company.batch[j].listName){
+                    tmplist.splice(i, 1);
+                }            
+            }
+            console.log("Exclude: "+JSON.stringify(this.batchExclude));
+            for(var i = 0; i < this.batchExclude.length; i++){
+                if(this.batchExclude[i].id == company.id){
+                    for(var j = 0; j < tmplist.length; j++){
+                        if(tmplist[j].listName == this.batchExclude[i].listName){
+                             tmplist.splice(j, 1);
+                        }
+                    }
+                }
+            }       
+            let disposable = this.dialogService.addDialog(ModalComponent, {
+                lists: tmplist,
+                company: company,
+                title: "Batch"
+                })
+                .subscribe( isConfirmed =>{
+                    if(isConfirmed){
+                     for(var i = 0; i < isConfirmed.length; i++){
+                        if(isConfirmed[i].checked == true){
+                            this.addBatch(company.id,isConfirmed[i].listName);                    
+                        }
+                    }
+                    }
+                });
+    }
     getPage(page: number) {
         this.loading = true;
         this.error = false;
@@ -236,21 +314,21 @@ export class StartupsComponent implements OnInit {
     }
 
     getTop20Lists() {
-      this.loading = true;
-      this.error = false;
+      //this.loading = true;
+      //this.error = false;
       this._startupService.getTop20Lists().map(res => {
       // If request fails, throw an Error that will be caught
       if(res.status == 204) {
-        this.loading = false;
-        this.error = true;
+        //this.loading = false;
+        //this.error = true;
         console.log("Search did not return any results.") 
       } else if (res.status < 200 || res.status >= 300){
-        this.loading = false;
+        //this.loading = false;
         throw new Error('This request has failed ' + res.status);
       }
       // If everything went fine, return the response
       else {
-        this.loading = false;
+        //this.loading = false;
         return res.json();
       }
     }).subscribe(data => this.top20lists = data,
@@ -259,24 +337,47 @@ export class StartupsComponent implements OnInit {
       )
   }
   getTop100Lists() {
-      this.loading = true;
-      this.error = false;
+      //this.loading = true;
+      //this.error = false;
       this._startupService.getTop100Lists().map(res => {
       // If request fails, throw an Error that will be caught
       if(res.status == 204) {
-        this.loading = false;
-        this.error = true;
+        //this.loading = false;
+        //this.error = true;
         console.log("Search did not return any results.") 
       } else if (res.status < 200 || res.status >= 300){
-        this.loading = false;
+        //this.loading = false;
         throw new Error('This request has failed ' + res.status);
       }
       // If everything went fine, return the response
       else {
-        this.loading = false;
+        //this.loading = false;
         return res.json();
       }
     }).subscribe(data => this.top100lists = data,
+      err => console.error('Error: ' + err),
+          () => console.log('Completed!')
+      )
+  }
+  getBatchLists() {
+      //this.loading = true;
+      //this.error = false;
+      this._startupService.getBatchLists().map(res => {
+      // If request fails, throw an Error that will be caught
+      if(res.status == 204) {
+        //this.loading = false;
+        //this.error = true;
+        console.log("Search did not return any results.") 
+      } else if (res.status < 200 || res.status >= 300){
+        //this.loading = false;
+        throw new Error('This request has failed ' + res.status);
+      }
+      // If everything went fine, return the response
+      else {
+        //this.loading = false;
+        return res.json();
+      }
+    }).subscribe(data => this.batchlists = data,
       err => console.error('Error: ' + err),
           () => console.log('Completed!')
       )

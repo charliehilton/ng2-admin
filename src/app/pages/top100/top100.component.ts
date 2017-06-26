@@ -85,7 +85,7 @@ export class Top100Component implements OnInit, OnDestroy  {
     }
   }*/
   exportToCSV() {
-      var fields = ['companyName', 'blurb', 'verticals', 'website', 'pnpContact', 'contactName', 'email', 'phoneNumber', 'totalMoneyRaised', 'stage', 'b2bb2c', 'employees', 'location', 'city', 'competition', 'advantage', 'background', 'founded', 'partnerInterests', 'caseStudy', 'comments', 'tags', 'materials', 'dateOfInvestment','timestamp'];
+      var fields = ['companyName', 'blurb', 'website', 'stage', 'location', 'background', 'verticals', 'competition', 'advantage', 'caseStudy', 'comments', 'pnpContact', 'contactName', 'email', 'phoneNumber', 'totalMoneyRaised', 'b2bb2c', 'employees', 'city', 'founded', 'partnerInterests', 'tags', 'materials', 'dateOfInvestment','timestamp'];
       let disposable = this.dialogService.addDialog(ModalComponent, {
           lists: fields
           })
@@ -103,7 +103,7 @@ export class Top100Component implements OnInit, OnDestroy  {
                 var result = json2csv({ data: this.companies, fields: exportList });
                 //console.log(result);
                 var blob = new Blob([result], { type: 'text/csv' });
-                FileSaver.saveAs(blob, this.listname+'-Top100.csv');
+                FileSaver.saveAs(blob, "Plug and Play - "+this.listname+' - Top 100.csv');
                 this.creatingcsv = false;
               } catch (err) {
                 // Errors are thrown for bad options, or if the data is empty and no fields are provided.

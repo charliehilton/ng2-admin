@@ -10,6 +10,8 @@ import {BusyModule} from 'angular2-busy';
 
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { ModalComponent } from './export.modal';
+import { CorpModalComponent } from './corp.modal';
+import { DealflowModalComponent } from './dealflow.modal';
 
 @NgModule({
   imports: [
@@ -21,14 +23,18 @@ import { ModalComponent } from './export.modal';
     BootstrapModalModule
   ],
   entryComponents: [
-    ModalComponent
+    ModalComponent,
+    CorpModalComponent,
+    DealflowModalComponent
   ],
   declarations: [
     Top20Component,
     SearchPipe,
     PipeFilter,
     SearchArrayPipe,
-    ModalComponent
+    ModalComponent,
+    CorpModalComponent,
+    DealflowModalComponent
   ],
   providers: [
     Top20Service

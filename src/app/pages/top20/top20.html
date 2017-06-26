@@ -7,15 +7,21 @@
       
         
         <div class="row show-grid">
-          <div class="col-md-8">
+          <div class="col-md-6">
           <div class="form-group">
             <input #input type="text" class="form-control form-control-rounded" id="input03" placeholder="Search for...">
           </div>
           </div>
           <div class="col-md-2">
+                <div *ngIf="creatingdealflow" class="loader">Loading...</div>
+                <div *ngIf="!creatingdealflow" class="button-wrapper">
+                  <button (click)="this.creatingdealflow=true;dealflow()" type="button" id="exportdealflow" class="btn btn-default btn-raised" style="float:right;">Dealflow</button>
+                </div>
+          </div>
+          <div class="col-md-2">
                 <div *ngIf="creatingpdf" class="loader">Loading...</div>
                 <div *ngIf="!creatingpdf" class="button-wrapper">
-                  <button (click)="this.creatingpdf=true;exportTop20List()" type="button" id="exportpdf" class="btn btn-default btn-raised" style="float:right;">Export to PDF</button>
+                  <button (click)="this.creatingpdf=true;exportToPDF()" type="button" id="exportpdf" class="btn btn-default btn-raised" style="float:right;">Export to PDF</button>
                 </div>
           </div>
           <div class="col-md-2">

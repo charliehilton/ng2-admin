@@ -41,12 +41,15 @@ export class ModalComponent extends DialogComponent<CustomModal, CheckForm[]> im
     super(dialogService);    
   }
   ngOnInit(){
-     for(var i = 0; i < this.lists.length; i++){
-      var obj:CheckForm = {};
-      obj.listName = this.lists[i].listName;
-      obj.checked = false;
-      this.formArray.push(obj);
+    if(typeof this.lists != 'undefined'){
+      for(var i = 0; i < this.lists.length; i++){
+        var obj:CheckForm = {};
+        obj.listName = this.lists[i].listName;
+        obj.checked = false;
+        this.formArray.push(obj);
+       }
     }
+    
   }
   confirm() {
     // we set dialog result as true on click on confirm button, 
