@@ -157,7 +157,7 @@ module.exports = function (options) {
         aggregateTimeout: 300,
         poll: 1000
       },
-      outputPath: helpers.root('dist'),
+      //outputPath: helpers.root('dist'),
       proxy: {
       '/rest/*': {
         target: 'http://54.145.172.103',
